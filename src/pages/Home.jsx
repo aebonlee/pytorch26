@@ -134,15 +134,15 @@ export default function Home() {
                     <span className="date">{day.date} · 진행 {done}/{day.sessions.length}교시</span>
                   </div>
                   <div className="tt-box">
+                    {/* 이론/실습은 이모지·체크 대신 단어 뱃지로 (대표 지정) */}
                     {day.sessions.map((s) => (
                       <Link key={s.slot} to={`/day/${day.id}/${s.slot}`} className="tt-row">
                         <span className="time">{s.time}</span>
                         <span className="slot">{s.slot}교시</span>
                         <span className="title">{s.title}</span>
                         <span className={`tag ${s.kind === 'impl' ? 'impl' : ''}`}>
-                          {s.kind === 'impl' ? '💻' : '📖'}
+                          {s.kind === 'impl' ? '실습' : '이론'}
                         </span>
-                        <span className={`check ${progress[sessionKey(day.id, s.slot)] ? 'done' : ''}`}>✔</span>
                       </Link>
                     ))}
                   </div>
