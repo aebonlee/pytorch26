@@ -6,6 +6,7 @@
 // 패들렛/게시판에 결과를 공유하는 흐름을 전제로 한다.
 // ============================================================
 import projects from '../data/projects.js'
+import SideNav from '../components/SideNav.jsx'
 
 const LEVEL_STYLE = {
   기본: { color: 'var(--green)', bg: 'rgba(63, 185, 80, 0.1)' },
@@ -15,8 +16,17 @@ const LEVEL_STYLE = {
 }
 
 export default function ProjectsPage() {
+  const navItems = projects.map((p) => ({
+    key: p.id,
+    anchor: `proj-${p.id}`,
+    sub: p.level,
+    label: `#${p.id} ${p.title}`,
+  }))
+
   return (
-    <div className="container">
+    <div className="container page-side">
+      <SideNav title="프로젝트 책갈피" items={navItems} />
+      <div className="page-main">
       <div className="session-head">
         <h1>미니 프로젝트</h1>
         <p className="meta">
@@ -37,7 +47,7 @@ export default function ProjectsPage() {
         {projects.map((p) => {
           const ls = LEVEL_STYLE[p.level]
           return (
-            <div key={p.id} className="card" style={{ marginBottom: 18 }}>
+            <div key={p.id} id={`proj-${p.id}`} className="card" style={{ marginBottom: 18 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
                 <span
                   style={{
@@ -89,6 +99,7 @@ export default function ProjectsPage() {
           )
         })}
       </section>
+      </div>
     </div>
   )
 }

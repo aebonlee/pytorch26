@@ -8,16 +8,25 @@
 // ============================================================
 import { Link } from 'react-router-dom'
 import { course } from '../data/curriculum.js'
+import SideNav from '../components/SideNav.jsx'
+
+const NAV_ITEMS = [
+  { key: 'intent', anchor: 'about-intent', label: '01 개발 취지' },
+  { key: 'instructor', anchor: 'about-instructor', label: '02 강사 소개' },
+  { key: 'overview', anchor: 'about-overview', label: '03 교육 개요' },
+]
 
 export default function AboutPage() {
   return (
-    <div className="container">
+    <div className="container page-side">
+      <SideNav title="About 책갈피" items={NAV_ITEMS} />
+      <div className="page-main">
       <div className="session-head">
         <h1>About — 과정 안내</h1>
         <p className="meta">이 사이트를 만든 이유와 강사 소개</p>
       </div>
 
-      <section className="section">
+      <section className="section" id="about-intent">
         <h2><span className="num">01</span>개발 취지</h2>
         <div className="theory-block">
           <h3>강의 흐름 그대로, 한 곳에서</h3>
@@ -38,7 +47,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section" id="about-instructor">
         <h2><span className="num">02</span>강사 소개</h2>
 
         {/* 프로필 헤더 + 핵심 정보 */}
@@ -140,7 +149,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section" id="about-overview">
         <h2><span className="num">03</span>교육 개요</h2>
         <div className="card">
           <table className="info-table">
@@ -163,6 +172,7 @@ export default function AboutPage() {
           </ul>
         </div>
       </section>
+      </div>
     </div>
   )
 }

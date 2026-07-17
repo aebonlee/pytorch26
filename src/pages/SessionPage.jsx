@@ -9,6 +9,7 @@ import { Link, useParams } from 'react-router-dom'
 import { getDay, getSession, days, sessionKey } from '../data/curriculum.js'
 import useProgress from '../hooks/useProgress.js'
 import CodeBlock from '../components/CodeBlock.jsx'
+import DaySideNav from '../components/DaySideNav.jsx'
 
 // 이전/다음 교시 탐색 (dir: -1 이전, +1 다음)
 // 같은 일차 안에서 먼저 찾고, 없으면 인접 일차의 첫/마지막 교시로 넘어간다.
@@ -42,7 +43,9 @@ export default function SessionPage() {
   const isLastSession = Number(dayId) === days.length && Number(slot) === day.sessions[day.sessions.length - 1].slot
 
   return (
-    <div className="container">
+    <div className="container page-side">
+      <DaySideNav dayId={dayId} currentSlot={slot} progress={progress} />
+      <div className="page-main">
       <div className="session-head">
         <div className="crumb">
           <Link to="/">홈</Link> / <Link to={`/day/${dayId}`}>DAY {dayId}</Link> / {slot}교시
@@ -95,6 +98,7 @@ export default function SessionPage() {
             {getSession(next.dayId, next.slot).title}
           </Link>
         ) : <span className="spacer" />}
+      </div>
       </div>
     </div>
   )

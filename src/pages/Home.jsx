@@ -1,6 +1,9 @@
 // ============================================================
-// 홈: 히어로(과정 요약) → 3일 카드(진도율 바) → 학습목표 →
+// 홈: 히어로(과정 요약) → 일자별 시간표(첫 콘텐츠, 각 행이
+//     교시 페이지로 연결 + 완료 체크) → 학습목표 →
 //     사전지식/학습대상 → 교육 개요 표
+// 2026-07-17 대표 지시로 "일자별 시간표"를 첫 페이지의 중심으로
+// 재구성 — 기존 3일 카드 그리드를 시간표로 교체했다.
 // 과정 메타 정보(일정·장소·목표 등) 수정은 curriculum.js의
 // course 객체에서 한다 — 이 파일은 렌더링만.
 // ============================================================
@@ -33,24 +36,32 @@ export default function Home() {
 
       <section className="section">
         <div className="container">
-          <h2><span className="num">01</span>3일 커리큘럼</h2>
-          <div className="card-grid">
-            {days.map((day) => {
-              const done = day.sessions.filter((s) => progress[sessionKey(day.id, s.slot)]).length
-              const pct = Math.round((done / day.sessions.length) * 100)
-              return (
-                <Link key={day.id} to={`/day/${day.id}`} className="day-card">
-                  <span className="day-label">DAY {day.id} · {day.date}</span>
-                  <h3>{day.theme}</h3>
-                  <p className="theme">{day.desc}</p>
-                  <div className="progress-line">
-                    학습 진행 {done}/{day.sessions.length} 교시
-                    <div className="progress-bar"><div style={{ width: `${pct}%` }} /></div>
-                  </div>
-                </Link>
-              )
-            })}
-          </div>
+          <h2><span className="num">01</span>일자별 시간표</h2>
+          {days.map((day) => {
+            const done = day.sessions.filter((s) => progress[sessionKey(day.id, s.slot)]).length
+            return (
+              <div key={day.id} className="tt-day">
+                <div className="tt-head">
+                  <Link to={`/day/${day.id}`} className="d">DAY {day.id}</Link>
+                  <span className="theme">{day.theme}</span>
+                  <span className="date">{day.date} · 진행 {done}/{day.sessions.length}교시</span>
+                </div>
+                <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 'var(--radius)', overflow: 'hidden' }}>
+                  {day.sessions.map((s) => (
+                    <Link key={s.slot} to={`/day/${day.id}/${s.slot}`} className="tt-row">
+                      <span className="time">{s.time}</span>
+                      <span className="slot">{s.slot}교시</span>
+                      <span className="title">{s.title}</span>
+                      <span className={`tag ${s.kind === 'impl' ? 'impl' : ''}`}>
+                        {s.kind === 'impl' ? '💻 실습' : '📖 이론'}
+                      </span>
+                      <span className={`check ${progress[sessionKey(day.id, s.slot)] ? 'done' : ''}`}>✔</span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )
+          })}
         </div>
       </section>
 

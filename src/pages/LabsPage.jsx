@@ -9,12 +9,26 @@
 import { Link } from 'react-router-dom'
 import { days } from '../data/curriculum.js'
 import CodeBlock from '../components/CodeBlock.jsx'
+import SideNav from '../components/SideNav.jsx'
 
 export default function LabsPage() {
   const totalCodes = days.reduce((n, d) => n + d.sessions.filter((s) => s.code).length, 0)
 
+  // 책갈피: DAY 헤더(굵게) + 코드 있는 교시들 (앵커 스크롤)
+  const navItems = days.flatMap((d) => [
+    { key: `d${d.id}`, anchor: `labs-day${d.id}`, label: `DAY ${d.id} — ${d.theme}`, strong: true },
+    ...d.sessions.filter((s) => s.code).map((s) => ({
+      key: `d${d.id}s${s.slot}`,
+      anchor: `labs-d${d.id}s${s.slot}`,
+      sub: s.code.filename,
+      label: `${s.slot}교시 ${s.title}`,
+    })),
+  ])
+
   return (
-    <div className="container">
+    <div className="container page-side">
+      <SideNav title="실습소스 책갈피" items={navItems} />
+      <div className="page-main">
       <div className="session-head">
         <h1>실습소스 모음</h1>
         <p className="meta">
@@ -52,13 +66,13 @@ export default function LabsPage() {
       </div>
 
       {days.map((day) => (
-        <section key={day.id} className="section">
+        <section key={day.id} id={`labs-day${day.id}`} className="section">
           <h2>
             <span className="num">DAY {day.id}</span>
             {day.theme}
           </h2>
           {day.sessions.filter((s) => s.code).map((s) => (
-            <div key={s.slot} style={{ marginBottom: 8 }}>
+            <div key={s.slot} id={`labs-d${day.id}s${s.slot}`} style={{ marginBottom: 8 }}>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, flexWrap: 'wrap', margin: '18px 0 -14px' }}>
                 <h3 style={{ fontSize: '0.98rem' }}>
                   {day.id}일차 {s.slot}교시 · {s.title}
@@ -75,6 +89,7 @@ export default function LabsPage() {
           ))}
         </section>
       ))}
+      </div>
     </div>
   )
 }

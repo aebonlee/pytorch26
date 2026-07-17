@@ -4,6 +4,7 @@
 // ============================================================
 import prereq from '../data/prereq.js'
 import CodeBlock from '../components/CodeBlock.jsx'
+import SideNav from '../components/SideNav.jsx'
 
 // level 뱃지 색: 필수=녹색(accent), 권장=노랑, 준비=파랑
 const LEVEL_STYLE = {
@@ -13,8 +14,17 @@ const LEVEL_STYLE = {
 }
 
 export default function PrereqPage() {
+  const navItems = prereq.map((p, i) => ({
+    key: p.id,
+    anchor: p.id,
+    sub: p.level,
+    label: `${String(i + 1).padStart(2, '0')} ${p.title}`,
+  }))
+
   return (
-    <div className="container">
+    <div className="container page-side">
+      <SideNav title="선수학습 책갈피" items={navItems} />
+      <div className="page-main">
       <div className="session-head">
         <h1>선수학습</h1>
         <p className="meta">
@@ -27,7 +37,7 @@ export default function PrereqPage() {
         {prereq.map((p, i) => {
           const ls = LEVEL_STYLE[p.level] || LEVEL_STYLE['준비']
           return (
-            <div key={p.id} style={{ marginBottom: 44 }}>
+            <div key={p.id} id={p.id} style={{ marginBottom: 44 }}>
               <h2>
                 <span className="num">{String(i + 1).padStart(2, '0')}</span>
                 {p.title}{' '}
@@ -72,6 +82,7 @@ export default function PrereqPage() {
           )
         })}
       </section>
+      </div>
     </div>
   )
 }
