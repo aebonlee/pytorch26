@@ -12,6 +12,7 @@ import projects from '../data/projects.js'
 import SideNav from '../components/SideNav.jsx'
 import CodeBlock from '../components/CodeBlock.jsx'
 import md, { stars } from '../utils/md.jsx'
+import { makeSkeleton, blankCount } from '../utils/skeleton.js'
 
 const LEVEL_STYLE = {
   기본: { color: 'var(--green)', bg: 'rgba(63, 185, 80, 0.1)' },
@@ -24,6 +25,7 @@ export default function ProjectsPage() {
   // 카드별 코드 토글 상태 — skel(괄호채우기) / sol(완성형) 각각 독립
   const [openSkel, setOpenSkel] = useState({})
   const [openSol, setOpenSol] = useState({})
+  const [skelLevel, setSkelLevel] = useState({})   // { [id]: 1|2|3 } — 괄호채우기 난이도
   const navItems = projects.map((p) => ({
     key: p.id,
     anchor: `proj-${p.id}`,
@@ -109,10 +111,11 @@ export default function ProjectsPage() {
               )}
 
               {/* 코드 토글 2종 — 카드 우하단, 기본 닫힘 (먼저 스스로 풀어보게)
-                  ① 괄호채우기(스켈레톤): 핵심 수식이 ________ 빈칸
+                  ① 괄호채우기: 난이도 1~3 선택 → 빈칸 개수 누적 증가
+                     (utils/skeleton.js가 완성 코드에서 런타임 생성)
                   ② 완성형 코드: 전체 정답 소스 */}
               <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 8, marginTop: 12, flexWrap: 'wrap' }}>
-                {p.skeleton && (
+                {p.blanks && (
                   <button
                     type="button"
                     className="sol-btn"
@@ -131,7 +134,38 @@ export default function ProjectsPage() {
                   </button>
                 )}
               </div>
-              {openSkel[p.id] && p.skeleton && <CodeBlock code={p.skeleton} />}
+
+              {openSkel[p.id] && p.blanks && (() => {
+                const lv = skelLevel[p.id] || 1
+                const { source, hints } = makeSkeleton(p.solution.source, p.blanks, lv)
+                const filename = p.solution.filename.replace('sol', 'fill').replace('.py', '_lv' + lv + '.py')
+                return (
+                  <div>
+                    <div className="tab-row" style={{ margin: '14px 0 10px' }}>
+                      {[1, 2, 3].map((l) => (
+                        <button
+                          key={l}
+                          type="button"
+                          className={'tab ' + (l === lv ? 'on' : '')}
+                          onClick={() => setSkelLevel((prev) => ({ ...prev, [p.id]: l }))}
+                        >
+                          난이도 {l}
+                          <span className="cnt">빈칸 {blankCount(p.blanks, l)}개</span>
+                        </button>
+                      ))}
+                    </div>
+                    <div className="objectives" style={{ margin: '0 0 -14px' }}>
+                      <h4>💡 빈칸 힌트</h4>
+                      <ul>
+                        {hints.map((h) => (
+                          <li key={h.num}><b style={{ color: 'var(--accent)' }}>{h.num}</b> {h.hint}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    <CodeBlock code={{ filename, source }} />
+                  </div>
+                )
+              })()}
               {openSol[p.id] && p.solution && <CodeBlock code={p.solution} />}
             </div>
           )
