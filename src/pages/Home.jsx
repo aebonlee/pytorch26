@@ -75,8 +75,8 @@ export default function Home() {
               <span className="accent">PyTorch</span>로 배우는 강화학습
             </h1>
             <p className="lede">
-              강화학습의 기초 이론부터 DQN, A2C, DDPG, SAC, TAC까지 —
-              3일 21시간 동안 직접 구현하며 원리를 몸에 익히는 집중 과정입니다.
+              {`강화학습의 기초 이론부터 DQN, A2C, DDPG, SAC, TAC까지
+— 3일 21시간 동안 직접 구현하며 원리를 몸에 익히는 집중 과정입니다.`}
             </p>
             <div className="meta-row">
               <span className="meta-chip">📍 <b>{course.place}</b></span>

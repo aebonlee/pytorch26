@@ -111,7 +111,7 @@ button { font-family: inherit; cursor: pointer; }
 }
 .hero-text { flex: 1 1 480px; text-align: left; }
 .hero-text .meta-row { justify-content: flex-start; }
-.hero-text .lede { margin-left: 0; }   /* 좌측 정렬 레이아웃에서 가운데 몰림 방지 */
+.hero-text .lede { margin-left: 0; white-space: pre-line; }   /* 좌측 정렬 + 하이픈(—) 기점 줄바꿈 유지 */
 
 .hero-art { flex: 0 0 300px; display: flex; justify-content: center; }
 .hero-art svg { width: 280px; height: 280px; }
