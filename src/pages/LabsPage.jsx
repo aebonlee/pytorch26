@@ -27,9 +27,25 @@ export default function LabsPage() {
     label: s.title,
   }))
 
+  // 사이드바 상단 DAY 전환 칩 — 본문 탭과 같은 상태를 전환한다
+  const sideHeader = (
+    <div className="side-days">
+      {days.map((d) => (
+        <button
+          key={d.id}
+          type="button"
+          className={d.id === activeDay ? 'on' : ''}
+          onClick={() => { setActiveDay(d.id); window.scrollTo({ top: 0 }) }}
+        >
+          DAY {d.id}
+        </button>
+      ))}
+    </div>
+  )
+
   return (
     <div className="container page-side">
-      <SideNav title={`DAY ${day.id} 실습소스 책갈피`} items={navItems} />
+      <SideNav title={`DAY ${day.id} 실습소스 책갈피`} items={navItems} header={sideHeader} />
       <div className="page-main">
       <div className="session-head">
         <h1>실습소스 모음</h1>
