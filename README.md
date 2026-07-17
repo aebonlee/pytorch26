@@ -2,7 +2,7 @@
 
 멀티캠퍼스 공개과정 3일(21시간) 학습사이트
 
-- **배포 URL**: https://aebonlee.github.io/pytorch26/
+- **배포 URL**: https://pytorch26.dreamitbiz.com/
 - **교육 일정**: 2026. 07. 27(월) ~ 07. 29(수), 09:30~17:30
 - **교육 장소**: 멀티캠퍼스 역삼캠퍼스
 - **강사**: 이애본 (DreamIT Biz)
@@ -35,7 +35,7 @@ npm run build    # dist/ 생성
 배포는 **main 푸시 시 GitHub Actions 자동배포** (`.github/workflows/deploy.yml`).
 Pages build_type은 workflow 방식 — legacy로 되돌리지 말 것.
 
-vite base는 `/pytorch26/` (프로젝트 페이지). 커스텀 도메인 연결 시 base를 `/`로 변경해야 자산 404가 나지 않음.
+커스텀 도메인 pytorch26.dreamitbiz.com — vite base는 반드시 `/` 유지 (`/pytorch26/`로 바꾸면 자산 404로 빈 화면).
 
 ## 실습 환경 (수강생 안내)
 

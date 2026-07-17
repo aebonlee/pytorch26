@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "homepage": "https://aebonlee.github.io/pytorch26/",
+  "homepage": "https://pytorch26.dreamitbiz.com/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
