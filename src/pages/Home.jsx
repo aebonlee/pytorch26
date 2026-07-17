@@ -11,28 +11,89 @@ import { Link } from 'react-router-dom'
 import { days, course, sessionKey } from '../data/curriculum.js'
 import useProgress from '../hooks/useProgress.js'
 
+// 히어로 우측 파이토치 불꽃 모티프 SVG
+// — 링+점(파비콘과 같은 모티프)을 크게, 바깥 점선 궤도(.orbit)는
+//   천천히 회전, 뒷배경 글로우(.glow)는 펄스 (CSS 애니메이션)
+function HeroArt() {
+  return (
+    <div className="hero-art" aria-hidden="true">
+      <svg viewBox="0 0 320 320" fill="none">
+        <defs>
+          <radialGradient id="haGlow" cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0" stopColor="#ee4c2c" stopOpacity="0.35" />
+            <stop offset="1" stopColor="#ee4c2c" stopOpacity="0" />
+          </radialGradient>
+          <linearGradient id="haRing" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stopColor="#ff7a55" />
+            <stop offset="1" stopColor="#ee4c2c" />
+          </linearGradient>
+        </defs>
+
+        {/* 배경 글로우 (펄스) */}
+        <circle className="glow" cx="160" cy="170" r="140" fill="url(#haGlow)" />
+
+        {/* 바깥 점선 궤도 + 컬러 노드 (천천히 회전) — 에이전트-환경 루프 모티프 */}
+        <g className="orbit">
+          <circle cx="160" cy="170" r="132" stroke="var(--border)" strokeWidth="1.5" strokeDasharray="4 9" />
+          <circle cx="160" cy="38" r="7" fill="#3fb950" />
+          <circle cx="292" cy="170" r="5.5" fill="#58a6ff" />
+          <circle cx="160" cy="302" r="6" fill="#d29922" />
+          <circle cx="28" cy="170" r="4.5" fill="#ee4c2c" opacity="0.7" />
+        </g>
+
+        {/* 파이토치 불꽃 모티프: 위가 트인 링 + 대각선 점 */}
+        <circle
+          cx="160" cy="170" r="86"
+          stroke="url(#haRing)" strokeWidth="30" strokeLinecap="round"
+          strokeDasharray="472 68"
+          transform="rotate(-121 160 170)"
+        />
+        <circle cx="234" cy="84" r="15" fill="url(#haRing)" />
+      </svg>
+    </div>
+  )
+}
+
+// 히어로 아래 띠줄에 흐르는 3일 알고리즘 키워드
+const TICKER = [
+  'Reinforcement Learning', 'MDP', 'Bellman Equation', 'Dynamic Programming',
+  'Monte-Carlo', 'TD Learning', 'SARSA', 'Q-Learning', 'DQN', 'Double DQN',
+  'Policy Gradient', 'Actor-Critic', 'A2C', 'DDPG', 'Maximum Entropy RL',
+  'Soft Actor-Critic', 'TAC', 'PyTorch',
+]
+
 export default function Home() {
   const { progress } = useProgress()
 
   return (
     <>
       <section className="hero">
-        <div className="container">
-          <span className="badge">멀티캠퍼스 공개과정 · 2026. 07. 27 ~ 07. 29</span>
-          <h1>
-            <span className="accent">PyTorch</span>로 배우는 강화학습
-          </h1>
-          <p className="lede">
-            강화학습의 기초 이론부터 DQN, A2C, DDPG, SAC, TAC까지 —
-            3일 21시간 동안 직접 구현하며 원리를 몸에 익히는 집중 과정입니다.
-          </p>
-          <div className="meta-row">
-            <span className="meta-chip">📍 <b>{course.place}</b></span>
-            <span className="meta-chip">🕘 <b>{course.hours}</b></span>
-            <span className="meta-chip">👨‍🏫 <b>{course.instructor}</b></span>
+        <div className="container hero-grid">
+          <div className="hero-text">
+            <span className="badge">멀티캠퍼스 공개과정 · 2026. 07. 27 ~ 07. 29</span>
+            <h1>
+              <span className="accent">PyTorch</span>로 배우는 강화학습
+            </h1>
+            <p className="lede">
+              강화학습의 기초 이론부터 DQN, A2C, DDPG, SAC, TAC까지 —
+              3일 21시간 동안 직접 구현하며 원리를 몸에 익히는 집중 과정입니다.
+            </p>
+            <div className="meta-row">
+              <span className="meta-chip">📍 <b>{course.place}</b></span>
+              <span className="meta-chip">🕘 <b>{course.hours}</b></span>
+              <span className="meta-chip">👨‍🏫 <b>{course.instructor}</b></span>
+            </div>
           </div>
+          <HeroArt />
         </div>
       </section>
+
+      {/* 알고리즘 키워드 띠줄 — 무한 흐름, 호버 시 일시정지 (2배 복제로 이음새 없는 루프) */}
+      <div className="hero-ticker" aria-hidden="true">
+        <div className="ticker-track">
+          {TICKER.concat(TICKER).map((t, i) => <span key={i}>{t}</span>)}
+        </div>
+      </div>
 
       <section className="section">
         <div className="container">

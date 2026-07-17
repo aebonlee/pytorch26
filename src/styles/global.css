@@ -103,7 +103,55 @@ button { font-family: inherit; cursor: pointer; }
 .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
 
 /* ── Hero ───────────────────────────── */
-.hero { padding: 64px 0 48px; text-align: center; }
+/* 2단 구성: 왼쪽 텍스트 + 오른쪽 파이토치 불꽃 모티프 SVG(애니메이션)
+   히어로 아래에는 알고리즘 키워드 띠줄(.hero-ticker)이 흐른다 */
+.hero { padding: 56px 0 40px; }
+.hero-grid {
+  display: flex; align-items: center; gap: 40px;
+}
+.hero-text { flex: 1 1 480px; text-align: left; }
+.hero-text .meta-row { justify-content: flex-start; }
+.hero-text .lede { margin-left: 0; }   /* 좌측 정렬 레이아웃에서 가운데 몰림 방지 */
+
+.hero-art { flex: 0 0 300px; display: flex; justify-content: center; }
+.hero-art svg { width: 280px; height: 280px; }
+.hero-art .orbit {
+  animation: heroSpin 26s linear infinite;
+  transform-box: fill-box; transform-origin: center;
+}
+.hero-art .glow { animation: heroPulse 4.5s ease-in-out infinite; }
+@keyframes heroSpin { to { transform: rotate(360deg); } }
+@keyframes heroPulse {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 0.95; }
+}
+
+/* 히어로 아래 키워드 띠줄 — 무한 흐름(marquee) */
+.hero-ticker {
+  overflow: hidden;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--accent-soft);
+  -webkit-mask: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  mask: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+}
+.ticker-track {
+  display: inline-flex; white-space: nowrap; width: max-content;
+  animation: tickerMove 34s linear infinite;
+}
+.hero-ticker:hover .ticker-track { animation-play-state: paused; }
+.ticker-track span {
+  padding: 10px 0 10px 26px;
+  font-size: 0.84rem; font-weight: 700; color: var(--text-dim);
+  display: inline-flex; align-items: center; gap: 26px;
+}
+.ticker-track span::after { content: '🔥'; font-size: 0.7rem; opacity: 0.8; }
+@keyframes tickerMove { to { transform: translateX(-50%); } }
+
+/* 모션 최소화 설정 존중 */
+@media (prefers-reduced-motion: reduce) {
+  .hero-art .orbit, .hero-art .glow, .ticker-track { animation: none; }
+}
 .hero .badge {
   display: inline-block; padding: 6px 14px; border-radius: 999px;
   background: var(--accent-soft); color: var(--accent);
@@ -480,6 +528,15 @@ mark.hl {
 .info-table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
 .info-table th, .info-table td { padding: 11px 14px; border-bottom: 1px solid var(--border); text-align: left; }
 .info-table th { color: var(--text-dim); font-weight: 600; width: 130px; white-space: nowrap; }
+
+/* 모바일: 히어로 아트는 축소·중앙 배치 */
+@media (max-width: 860px) {
+  .hero-grid { flex-direction: column-reverse; gap: 8px; }
+  .hero-text { text-align: center; }
+  .hero-text .meta-row { justify-content: center; }
+  .hero-art { flex-basis: auto; }
+  .hero-art svg { width: 170px; height: 170px; }
+}
 
 /* 모바일: 사이드바를 상단 가로 스크롤 칩으로 전환 */
 @media (max-width: 860px) {
