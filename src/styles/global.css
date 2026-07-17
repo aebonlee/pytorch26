@@ -66,7 +66,9 @@ body {
 a { color: inherit; text-decoration: none; }
 button { font-family: inherit; cursor: pointer; }
 
-.container { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+/* 사이트 기준 가로폭: 1280px (사이드바 190px 제외 시 본문 약 1040px)
+   — 사이드바 도입으로 1080에서 확대 (2026-07-17) */
+.container { max-width: 1280px; margin: 0 auto; padding: 0 20px; }
 
 /* ── Header ─────────────────────────── */
 .site-header {
