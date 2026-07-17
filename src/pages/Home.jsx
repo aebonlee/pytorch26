@@ -46,7 +46,7 @@ function HeroArt() {
           cx="160" cy="170" r="86"
           stroke="url(#haRing)" strokeWidth="30" strokeLinecap="round"
           strokeDasharray="472 68"
-          transform="rotate(-121 160 170)"
+          transform="rotate(-8 160 170)"
         />
         <circle cx="234" cy="84" r="15" fill="url(#haRing)" />
       </svg>
