@@ -21,7 +21,9 @@ const LEVEL_STYLE = {
 }
 
 export default function ProjectsPage() {
-  const [openSol, setOpenSol] = useState({})   // { [프로젝트 id]: 열림 여부 }
+  // 카드별 코드 토글 상태 — skel(괄호채우기) / sol(완성형) 각각 독립
+  const [openSkel, setOpenSkel] = useState({})
+  const [openSol, setOpenSol] = useState({})
   const navItems = projects.map((p) => ({
     key: p.id,
     anchor: `proj-${p.id}`,
@@ -106,21 +108,31 @@ export default function ProjectsPage() {
                 </p>
               )}
 
-              {/* 완성 소스 토글 — 카드 우하단, 기본 닫힘 (먼저 스스로 풀어보게) */}
-              {p.solution && (
-                <>
-                  <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 12 }}>
-                    <button
-                      type="button"
-                      className="sol-btn"
-                      onClick={() => setOpenSol((prev) => ({ ...prev, [p.id]: !prev[p.id] }))}
-                    >
-                      {openSol[p.id] ? '완성 소스 닫기 ▲' : '📄 완성 소스 보기 ▼'}
-                    </button>
-                  </div>
-                  {openSol[p.id] && <CodeBlock code={p.solution} />}
-                </>
-              )}
+              {/* 코드 토글 2종 — 카드 우하단, 기본 닫힘 (먼저 스스로 풀어보게)
+                  ① 괄호채우기(스켈레톤): 핵심 수식이 ________ 빈칸
+                  ② 완성형 코드: 전체 정답 소스 */}
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 8, marginTop: 12, flexWrap: 'wrap' }}>
+                {p.skeleton && (
+                  <button
+                    type="button"
+                    className="sol-btn"
+                    onClick={() => setOpenSkel((prev) => ({ ...prev, [p.id]: !prev[p.id] }))}
+                  >
+                    {openSkel[p.id] ? '괄호채우기 닫기 ▲' : '🧩 괄호채우기 보기 ▼'}
+                  </button>
+                )}
+                {p.solution && (
+                  <button
+                    type="button"
+                    className="sol-btn sol-full"
+                    onClick={() => setOpenSol((prev) => ({ ...prev, [p.id]: !prev[p.id] }))}
+                  >
+                    {openSol[p.id] ? '완성형 코드 닫기 ▲' : '📄 완성형 코드 보기 ▼'}
+                  </button>
+                )}
+              </div>
+              {openSkel[p.id] && p.skeleton && <CodeBlock code={p.skeleton} />}
+              {openSol[p.id] && p.solution && <CodeBlock code={p.solution} />}
             </div>
           )
         })}

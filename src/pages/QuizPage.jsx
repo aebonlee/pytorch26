@@ -1,9 +1,13 @@
 // ============================================================
 // 복습퀴즈 (/quiz) — 문항 데이터는 data/quizzes.js
 // ------------------------------------------------------------
+// 왼쪽 사이드바 (대표 지정 디자인, 2026-07-17):
+//  ① 1~15 번호 버튼 그리드 — 풀이 여부를 색으로 표시
+//     (미풀이=회색 / 풀이함=파랑 / 채점 후 정답=초록·오답=빨강),
+//     버튼 클릭 시 해당 문항으로 스크롤
+//  ② 그 아래 점수 박스 — 진행 중엔 응답 수, 채점 후엔 점수
+//  ③ 그 아래 응시 기록 박스 — 1~3회차 점수와 남은 기회
 // 동작:
-//  - 왼쪽 사이드바 = 문항 책갈피 (선택한 답안 ①~④ 표시,
-//    채점 후에는 정답/오답 표시)
 //  - 전 문항 선택 전엔 제출 버튼 비활성 → 제출 시 채점
 //    (정답 녹색 / 내 오답 빨강 / 해설 표시)
 //  - **응시는 최대 3회** — 회차별 점수를 localStorage
@@ -15,7 +19,6 @@
 import { useState } from 'react'
 import quizzes from '../data/quizzes.js'
 import md from '../utils/md.jsx'
-import SideNav from '../components/SideNav.jsx'
 
 const ATTEMPTS_KEY = 'pytorch26_quiz_attempts'
 const MAX_ATTEMPTS = 3
@@ -58,24 +61,66 @@ export default function QuizPage() {
     window.scrollTo(0, 0)
   }
 
-  // 사이드바: 문항별 선택 상태 (채점 후에는 정답/오답)
-  const navItems = quizzes.map((q, qi) => {
-    const picked = answers[qi]
-    let sub
-    if (submitted) sub = picked === q.answer ? '정답 ✔' : `오답 (내 답 ${CIRCLED[picked]})`
-    else sub = picked !== undefined ? `선택 ${CIRCLED[picked]}` : '미선택'
-    return {
-      key: qi,
-      anchor: `quiz-q${qi}`,
-      sub,
-      label: `Q${qi + 1}. ${q.q.length > 22 ? q.q.slice(0, 22) + '…' : q.q}`,
-      done: submitted ? picked === q.answer : picked !== undefined,
-    }
-  })
+  const scrollToQ = (qi) => {
+    document.getElementById(`quiz-q${qi}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
 
   return (
     <div className="container page-side">
-      <SideNav title={`복습퀴즈 · 응답 ${answeredCount}/${quizzes.length}`} items={navItems} />
+      {/* 사이드바: 번호 버튼 그리드 → 점수 → 응시 기록 */}
+      <aside className="side-nav">
+        <div className="side-title">문항 풀이 현황</div>
+        <div className="quiz-nums">
+          {quizzes.map((q, qi) => {
+            let cls = 'qnum-btn'
+            if (submitted) cls += answers[qi] === q.answer ? ' correct' : ' wrong'
+            else if (answers[qi] !== undefined) cls += ' answered'
+            return (
+              <button key={qi} type="button" className={cls} onClick={() => scrollToQ(qi)}>
+                {qi + 1}
+              </button>
+            )
+          })}
+        </div>
+        <div className="quiz-legend">
+          {submitted ? (
+            <>
+              <i style={{ background: 'var(--green)' }} />정답{' '}
+              <i style={{ background: 'var(--red)' }} />오답
+            </>
+          ) : (
+            <>
+              <i style={{ background: 'var(--blue)' }} />풀이함{' '}
+              <i style={{ background: 'var(--border)' }} />미풀이
+            </>
+          )}
+        </div>
+
+        <div className="quiz-side-box">
+          {submitted ? (
+            <>이번 점수<br /><span className="big">{score} / {quizzes.length}</span></>
+          ) : (
+            <>응답 진행<br /><span className="big">{answeredCount} / {quizzes.length}</span></>
+          )}
+        </div>
+
+        <div className="quiz-side-box">
+          <div style={{ fontWeight: 800, marginBottom: 6, color: 'var(--text)' }}>응시 기록 (최대 {MAX_ATTEMPTS}회)</div>
+          {[0, 1, 2].map((i) => (
+            <div key={i} className="attempt-row">
+              <span>{i + 1}회차</span>
+              {attempts[i]
+                ? <span className="val">{attempts[i].score} / {attempts[i].total}</span>
+                : <span className="val empty">—</span>}
+            </div>
+          ))}
+          <div style={{ marginTop: 6 }}>
+            {attemptsLeft > 0
+              ? <>남은 기회 <b style={{ color: 'var(--accent)' }}>{attemptsLeft}회</b></>
+              : <b style={{ color: 'var(--accent)' }}>응시 완료</b>}
+          </div>
+        </div>
+      </aside>
       <div className="page-main">
       <div className="session-head">
         <h1>복습 퀴즈</h1>

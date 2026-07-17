@@ -385,6 +385,40 @@ mark.hl {
 .side-days a:hover, .side-days button:hover { border-color: var(--accent); color: var(--accent); }
 .side-days a.on, .side-days button.on { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
 
+/* ── 복습퀴즈 사이드바: 번호 버튼 그리드 + 점수/응시 기록 ── */
+.quiz-nums {
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  gap: 6px; padding: 0 10px 12px; min-width: 200px;
+}
+.qnum-btn {
+  aspect-ratio: 1; border: 1px solid var(--border); border-radius: 8px;
+  background: var(--bg-card); color: var(--text-dim);
+  font-weight: 700; font-size: 0.82rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.12s;
+}
+.qnum-btn:hover { border-color: var(--accent); color: var(--accent); }
+.qnum-btn.answered { border-color: var(--blue); color: var(--blue); background: rgba(88, 166, 255, 0.12); }
+.qnum-btn.correct { border-color: var(--green); color: var(--green); background: rgba(63, 185, 80, 0.14); }
+.qnum-btn.wrong { border-color: var(--red); color: var(--red); background: rgba(248, 81, 73, 0.12); }
+
+.quiz-side-box {
+  margin: 0 10px 12px; padding: 11px 13px;
+  border: 1px solid var(--border); border-radius: 10px;
+  font-size: 0.8rem; color: var(--text-dim);
+  background: var(--bg-card); min-width: 180px;
+}
+.quiz-side-box .big { font-size: 1.3rem; font-weight: 900; color: var(--accent); }
+.quiz-side-box .attempt-row {
+  display: flex; justify-content: space-between;
+  padding: 3px 0; border-bottom: 1px dashed var(--border);
+}
+.quiz-side-box .attempt-row:last-of-type { border-bottom: none; }
+.quiz-side-box .attempt-row .val { font-weight: 800; color: var(--text); }
+.quiz-side-box .attempt-row .val.empty { color: var(--border); font-weight: 600; }
+.quiz-legend { padding: 0 10px 10px; font-size: 0.68rem; color: var(--text-dim); line-height: 1.8; }
+.quiz-legend i { display: inline-block; width: 9px; height: 9px; border-radius: 3px; margin-right: 4px; }
+
 /* ── 완성 소스 토글 버튼 (프로젝트 카드 우하단) ── */
 .sol-btn {
   padding: 8px 16px; border-radius: 8px;
@@ -393,6 +427,7 @@ mark.hl {
   transition: all 0.12s;
 }
 .sol-btn:hover { border-color: var(--accent); color: var(--accent); }
+.sol-btn.sol-full { background: var(--accent-soft); border-color: rgba(238, 76, 44, 0.35); color: var(--accent); }
 
 /* ── 일자별 탭 (실습소스 등) ───────────── */
 .tab-row { display: flex; gap: 8px; margin: 18px 0 22px; flex-wrap: wrap; }
