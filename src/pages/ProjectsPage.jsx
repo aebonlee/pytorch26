@@ -4,9 +4,13 @@
 // 이전 과정 패들렛의 "미니프로젝트+결과 인증" 운영 패턴을 반영:
 // 각 프로젝트에 결과 인증 기준이 있고, 수업 중 안내하는
 // 패들렛/게시판에 결과를 공유하는 흐름을 전제로 한다.
+// 카드 우하단 "완성 소스 보기" 토글로 solution 코드를 열고 닫는다
+// — 스스로 먼저 풀어보게 기본은 닫힘 상태.
 // ============================================================
+import { useState } from 'react'
 import projects from '../data/projects.js'
 import SideNav from '../components/SideNav.jsx'
+import CodeBlock from '../components/CodeBlock.jsx'
 import md, { stars } from '../utils/md.jsx'
 
 const LEVEL_STYLE = {
@@ -17,6 +21,7 @@ const LEVEL_STYLE = {
 }
 
 export default function ProjectsPage() {
+  const [openSol, setOpenSol] = useState({})   // { [프로젝트 id]: 열림 여부 }
   const navItems = projects.map((p) => ({
     key: p.id,
     anchor: `proj-${p.id}`,
@@ -99,6 +104,22 @@ export default function ProjectsPage() {
                 <p style={{ marginTop: 10, fontSize: '0.85rem', color: 'var(--text-dim)' }}>
                   <b style={{ color: 'var(--yellow)' }}>➕ 더 도전:</b> {p.stretch.join(' · ')}
                 </p>
+              )}
+
+              {/* 완성 소스 토글 — 카드 우하단, 기본 닫힘 (먼저 스스로 풀어보게) */}
+              {p.solution && (
+                <>
+                  <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 12 }}>
+                    <button
+                      type="button"
+                      className="sol-btn"
+                      onClick={() => setOpenSol((prev) => ({ ...prev, [p.id]: !prev[p.id] }))}
+                    >
+                      {openSol[p.id] ? '완성 소스 닫기 ▲' : '📄 완성 소스 보기 ▼'}
+                    </button>
+                  </div>
+                  {openSol[p.id] && <CodeBlock code={p.solution} />}
+                </>
               )}
             </div>
           )

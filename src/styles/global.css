@@ -385,6 +385,15 @@ mark.hl {
 .side-days a:hover, .side-days button:hover { border-color: var(--accent); color: var(--accent); }
 .side-days a.on, .side-days button.on { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
 
+/* ── 완성 소스 토글 버튼 (프로젝트 카드 우하단) ── */
+.sol-btn {
+  padding: 8px 16px; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--bg-soft);
+  color: var(--text-dim); font-size: 0.83rem; font-weight: 700;
+  transition: all 0.12s;
+}
+.sol-btn:hover { border-color: var(--accent); color: var(--accent); }
+
 /* ── 일자별 탭 (실습소스 등) ───────────── */
 .tab-row { display: flex; gap: 8px; margin: 18px 0 22px; flex-wrap: wrap; }
 .tab-row .tab {
