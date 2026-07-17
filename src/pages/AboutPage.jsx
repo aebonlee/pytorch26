@@ -32,32 +32,104 @@ export default function AboutPage() {
 
       <section className="section">
         <h2><span className="num">02</span>강사 소개</h2>
+
+        {/* 프로필 헤더 + 핵심 정보 */}
         <div className="card" style={{ marginBottom: 16 }}>
-          <h3>이애본 — DreamIT Biz 대표</h3>
-          <p style={{ marginTop: 8 }}>
-            PyTorch 딥러닝 저서를 집필했고, 대학·기업·공공기관에서 인공지능과 프로그래밍
-            교육을 다수 진행해 온 현장형 강사입니다. 이론을 수식으로만 전달하기보다,
-            직접 구현하고 실행 결과를 눈으로 확인하며 원리를 체득하는 수업을 지향합니다.
-          </p>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 24, alignItems: 'flex-start' }}>
+            <div style={{ flex: '0 0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
+              <img
+                src={`${import.meta.env.BASE_URL}aebon.jpeg`}
+                alt="이애본 박사"
+                width={150}
+                height={150}
+                style={{
+                  width: 150, height: 150, borderRadius: '50%', objectFit: 'cover', objectPosition: 'center top',
+                  border: '3px solid var(--border)', boxShadow: '0 8px 24px rgba(0,0,0,0.18)',
+                }}
+              />
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ fontSize: '1.15rem', fontWeight: 900, color: 'var(--text)' }}>이애본</div>
+                <div style={{ fontSize: '0.8rem', color: 'var(--accent)', fontWeight: 700, marginTop: 2 }}>Ph.D Aebon Lee</div>
+              </div>
+            </div>
+            <div style={{ flex: '1 1 300px' }}>
+              <p style={{ color: 'var(--text-dim)', fontSize: '0.95rem', lineHeight: 1.9, marginTop: 4 }}>
+                생성형 인공지능 교육과 에듀테크 플랫폼 개발을 전문으로 하는 강사입니다.
+                120여 개의 교육 사이트를 직접 설계·개발·운영하고 있습니다.
+                대학교(경기대·한신대·한국기술교육대·전남대·서울대·한국외대 등)와
+                기업·공공기관에서 AI 활용 교육을 진행하고 있습니다.
+              </p>
+            </div>
+            <div style={{ flex: '1 1 300px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+              {[
+                ['직위', '드림아이티비즈 대표'],
+                ['학위', '정보관리박사 (Ph.D)'],
+                ['전공', '컴퓨터 / 직업학 / 정보관리'],
+                ['교육 사이트', '120여 개 직접 개발·운영'],
+                ['교육 대상', '대학 · 기업 · 공공기관'],
+              ].map(([k, v]) => (
+                <div key={k} style={{ padding: '9px 12px', background: 'var(--bg-soft)', borderRadius: 8, fontSize: '0.8rem' }}>
+                  <span style={{ color: 'var(--text-dim)', fontWeight: 600 }}>{k}</span>
+                  <div style={{ color: 'var(--text)', fontWeight: 800, marginTop: 2 }}>{v}</div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
+
+        {/* 전문 분야 */}
+        <h3 style={{ fontSize: '1.05rem', fontWeight: 800, margin: '24px 0 12px' }}>전문 분야</h3>
         <div className="card-grid">
-          <div className="card">
-            <h3>📚 주요 활동</h3>
-            <ul>
-              <li>PyTorch 딥러닝 저서 집필</li>
-              <li>대학 AI·데이터 교육 다수 (서울대, 전남대, 명지대, 한국기술교육대, 조선대, UNIST 등)</li>
-              <li>기업·기관 AI 교육 (SK SKALA, 멀티캠퍼스, KERIS, 공공기관 생성형 AI 과정 등)</li>
-              <li>AI 학습 플랫폼·교육 사이트 다수 기획·개발 운영</li>
-            </ul>
-          </div>
-          <div className="card">
-            <h3>🎯 수업 철학</h3>
-            <ul>
-              <li>이론 한 시간, 구현 한 시간 — 배운 것은 반드시 코드로 확인</li>
-              <li>알고리즘의 "계보"를 잇는 수업 — 왜 이 알고리즘이 나왔는지부터</li>
-              <li>수업이 끝나도 혼자 학습을 이어갈 수 있는 로드맵 제공</li>
-            </ul>
-          </div>
+          {[
+            { area: '생성형 AI 교육', detail: 'ChatGPT, Gemini, Claude, Copilot 등 AI 도구 활용 교육' },
+            { area: '딥러닝 · 강화학습', detail: 'PyTorch 기반 딥러닝·강화학습 이론과 구현 교육' },
+            { area: '프롬프트 엔지니어링', detail: 'SCORE 프레임워크, Chain-of-Thought, Few-shot 등 고급 기법' },
+            { area: '에듀테크 플랫폼', detail: 'React + Supabase 기반 교육 사이트 설계·개발·운영' },
+            { area: '대학 교육', detail: 'AI·SW개론, 컴퓨팅 사고, 파이썬 프로그래밍 등 대학 교과목 강의' },
+            { area: '출판 · 콘텐츠', detail: 'AI·IT·경영 분야 전문 도서 기획·출판' },
+          ].map((e) => (
+            <div key={e.area} className="card" style={{ padding: '16px 18px' }}>
+              <h3 style={{ fontSize: '0.95rem' }}>{e.area}</h3>
+              <p style={{ fontSize: '0.85rem' }}>{e.detail}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* 주요 경력 */}
+        <h3 style={{ fontSize: '1.05rem', fontWeight: 800, margin: '24px 0 12px' }}>주요 경력</h3>
+        <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
+          {[
+            { period: '현재', role: '드림아이티비즈(DreamIT Biz) 대표', detail: '에듀테크 전문 기업 경영, 120여 개 교육 사이트 운영' },
+            { period: '현재', role: '한신대학교 AI·SW대학 겸임교수', detail: 'AI·SW개론, 공학설계입문, 자바프로그래밍, 웹프로그래밍 담당' },
+            { period: '현재', role: '한국기술교육대학교 외래교수', detail: '"컴퓨팅 사고" 교과목 담당' },
+            { period: '2018~2023', role: '경기대학교 겸임교수', detail: '소프트웨어 기초 및 파이썬 프로그래밍, Warm-Up 과정 담당' },
+            { period: '2001~', role: '기업 AI 교육 전문 강사', detail: '고용노동부 직업능력개발훈련교사 — 정보통신분야 인공지능, 프로그래밍 개발, UI/UX디자인 외 다수' },
+          ].map((c, i, arr) => (
+            <div
+              key={i}
+              style={{
+                display: 'flex', flexWrap: 'wrap', gap: 12, alignItems: 'baseline',
+                padding: '14px 18px', borderBottom: i < arr.length - 1 ? '1px solid var(--border)' : 'none',
+              }}
+            >
+              <span style={{ flex: '0 0 92px', fontSize: '0.8rem', fontWeight: 800, color: 'var(--accent)' }}>{c.period}</span>
+              <span style={{ flex: '1 1 220px', fontSize: '0.92rem', fontWeight: 800, color: 'var(--text)' }}>{c.role}</span>
+              <span style={{ flex: '2 1 320px', fontSize: '0.85rem', color: 'var(--text-dim)', lineHeight: 1.6 }}>{c.detail}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* 교육 철학 */}
+        <div className="card" style={{ marginTop: 24, background: '#141a26', border: '1px solid #2d3646' }}>
+          <div style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--accent)', letterSpacing: 1 }}>TEACHING PHILOSOPHY</div>
+          <p style={{ marginTop: 8, fontWeight: 900, fontSize: '1.15rem', color: '#e6edf3' }}>
+            "AI는 도구이고, 진짜 혁신은 사람이 만듭니다."
+          </p>
+          <p style={{ marginTop: 8, fontSize: '0.9rem', lineHeight: 1.9, color: 'rgba(230,237,243,0.82)' }}>
+            교육의 핵심은 기술을 '아는 것'이 아니라 '할 수 있는 것'으로 만드는 데 있습니다.
+            이론 30% · 실습 70% 구성으로 교육 현장에서 바로 적용할 수 있는 실무 역량을 키웁니다.
+            교육이 끝난 뒤에도 이 플랫폼에서 학습이 계속 이어지도록 함께 운영합니다.
+          </p>
         </div>
       </section>
 
