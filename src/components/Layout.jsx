@@ -25,6 +25,8 @@ export default function Layout() {
             <span className="sub">멀티캠퍼스 3일 과정</span>
           </NavLink>
           <nav className="nav">
+            <NavLink to="/about">About</NavLink>
+            <NavLink to="/prereq">선수학습</NavLink>
             <NavLink to="/day/1">1일차</NavLink>
             <NavLink to="/day/2">2일차</NavLink>
             <NavLink to="/day/3">3일차</NavLink>

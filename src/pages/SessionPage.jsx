@@ -1,26 +1,7 @@
-import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { getDay, getSession, days, sessionKey } from '../data/curriculum.js'
 import useProgress from '../hooks/useProgress.js'
-
-function CodeBlock({ code }) {
-  const [copied, setCopied] = useState(false)
-  const copy = () => {
-    navigator.clipboard.writeText(code.source).then(() => {
-      setCopied(true)
-      setTimeout(() => setCopied(false), 1500)
-    })
-  }
-  return (
-    <div className="code-block">
-      <div className="code-head">
-        <span>🐍 {code.filename}</span>
-        <button className="copy-btn" onClick={copy}>{copied ? '✓ 복사됨' : '복사'}</button>
-      </div>
-      <pre><code>{code.source}</code></pre>
-    </div>
-  )
-}
+import CodeBlock from '../components/CodeBlock.jsx'
 
 function findAdjacent(dayId, slot, dir) {
   const day = getDay(dayId)

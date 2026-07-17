@@ -5,12 +5,16 @@ import DayPage from './pages/DayPage.jsx'
 import SessionPage from './pages/SessionPage.jsx'
 import QuizPage from './pages/QuizPage.jsx'
 import ExtraPage from './pages/ExtraPage.jsx'
+import AboutPage from './pages/AboutPage.jsx'
+import PrereqPage from './pages/PrereqPage.jsx'
 
 export default function App() {
   return (
     <Routes>
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/prereq" element={<PrereqPage />} />
         <Route path="/day/:dayId" element={<DayPage />} />
         <Route path="/day/:dayId/:slot" element={<SessionPage />} />
         <Route path="/quiz" element={<QuizPage />} />

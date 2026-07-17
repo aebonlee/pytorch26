@@ -66,6 +66,11 @@ export default function Home() {
             <div className="card">
               <h3>✅ 사전 지식</h3>
               <ul>{course.prerequisites.map((p, i) => <li key={i}>{p}</li>)}</ul>
+              <p style={{ marginTop: 10 }}>
+                <Link to="/prereq" style={{ color: 'var(--accent)', fontWeight: 700 }}>
+                  → 선수학습 페이지에서 셀프체크 해보기
+                </Link>
+              </p>
             </div>
             <div className="card">
               <h3>🎯 학습 대상</h3>
