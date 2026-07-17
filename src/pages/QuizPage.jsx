@@ -6,6 +6,7 @@
 // ============================================================
 import { useState } from 'react'
 import quizzes from '../data/quizzes.js'
+import md from '../utils/md.jsx'
 
 export default function QuizPage() {
   const [answers, setAnswers] = useState({})
@@ -55,7 +56,7 @@ export default function QuizPage() {
                 </button>
               )
             })}
-            {submitted && <div className="explain">💡 {quiz.explain}</div>}
+            {submitted && <div className="explain">💡 {md(quiz.explain)}</div>}
           </div>
         ))}
 

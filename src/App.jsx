@@ -3,7 +3,8 @@
 // ------------------------------------------------------------
 //   /                → Home        과정 소개 + 3일 카드(진도율)
 //   /about           → AboutPage   개발취지 + 강사소개(SKALA 기준)
-//   /prereq          → PrereqPage  선수학습 5영역 셀프체크
+//   /prereq          → PrereqPage  선수학습 4영역 셀프체크
+//   /setup           → SetupPage   환경설정 5단계(설치·Colab·VS Code)
 //   /day/:dayId      → DayPage     해당 일차의 7교시 목록
 //   /day/:dayId/:slot→ SessionPage 교시 상세(이론+코드+완료버튼)
 //   /labs            → LabsPage    실습소스 모음(21교시 코드 집약)
@@ -23,6 +24,7 @@ import AboutPage from './pages/AboutPage.jsx'
 import PrereqPage from './pages/PrereqPage.jsx'
 import LabsPage from './pages/LabsPage.jsx'
 import ProjectsPage from './pages/ProjectsPage.jsx'
+import SetupPage from './pages/SetupPage.jsx'
 
 export default function App() {
   return (
@@ -31,6 +33,7 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/prereq" element={<PrereqPage />} />
+        <Route path="/setup" element={<SetupPage />} />
         <Route path="/day/:dayId" element={<DayPage />} />
         <Route path="/day/:dayId/:slot" element={<SessionPage />} />
         <Route path="/labs" element={<LabsPage />} />

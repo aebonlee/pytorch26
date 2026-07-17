@@ -7,6 +7,7 @@
 // ============================================================
 import projects from '../data/projects.js'
 import SideNav from '../components/SideNav.jsx'
+import md, { stars } from '../utils/md.jsx'
 
 const LEVEL_STYLE = {
   기본: { color: 'var(--green)', bg: 'rgba(63, 185, 80, 0.1)' },
@@ -61,9 +62,13 @@ export default function ProjectsPage() {
                   <span style={{ color: 'var(--accent)', marginRight: 6 }}>#{p.id}</span>
                   {p.title}
                 </h3>
+                <span className="meta-badges">
+                  <span className="mb">난이도 <b>{stars(p.difficulty)}</b></span>
+                  <span className="mb imp">중요도 <b>{stars(p.importance)}</b></span>
+                </span>
               </div>
 
-              <p style={{ marginTop: 10, color: 'var(--text-dim)', fontSize: '0.92rem' }}>{p.goal}</p>
+              <p style={{ marginTop: 10, color: 'var(--text-dim)', fontSize: '0.92rem' }}>{md(p.goal)}</p>
 
               <table className="info-table" style={{ marginTop: 12 }}>
                 <tbody>
@@ -75,7 +80,7 @@ export default function ProjectsPage() {
               <div style={{ marginTop: 14 }}>
                 <h4 style={{ fontSize: '0.85rem', color: 'var(--text-dim)', marginBottom: 6 }}>🛠 구현 흐름</h4>
                 <ol style={{ paddingLeft: 20, color: 'var(--text-dim)', fontSize: '0.9rem' }}>
-                  {p.guide.map((g, i) => <li key={i} style={{ marginBottom: 4 }}>{g}</li>)}
+                  {p.guide.map((g, i) => <li key={i} style={{ marginBottom: 4 }}>{md(g)}</li>)}
                 </ol>
               </div>
 
@@ -87,7 +92,7 @@ export default function ProjectsPage() {
                 }}
               >
                 <b style={{ color: 'var(--green)' }}>✅ 결과 인증:</b>{' '}
-                <span style={{ color: 'var(--text-dim)' }}>{p.cert}</span>
+                <span style={{ color: 'var(--text-dim)' }}>{md(p.cert)}</span>
               </div>
 
               {p.stretch && (

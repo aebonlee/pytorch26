@@ -51,7 +51,7 @@ export default function LabsPage() {
         <div className="extra-card" style={{ cursor: 'default' }}>
           <span className="kind">환경 준비</span>
           <h3>pip install torch gymnasium numpy</h3>
-          <p>GPU 불필요 (전체 실습 CPU 충분) · 설치가 어려우면 Colab 사용 — 자세한 안내는 <Link to="/prereq" style={{ color: 'var(--accent)', fontWeight: 700 }}>선수학습</Link> 5번</p>
+          <p>GPU 불필요 (전체 실습 CPU 충분) · 설치가 어려우면 Colab 사용 — 자세한 안내는 <Link to="/setup" style={{ color: 'var(--accent)', fontWeight: 700 }}>환경설정</Link> 참고</p>
         </div>
       </div>
 

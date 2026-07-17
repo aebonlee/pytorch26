@@ -1,8 +1,8 @@
 // ============================================================
-// 선수학습 데이터 (멀티캠퍼스 안내의 사전지식 3줄을 5영역으로 확장)
+// 선수학습 데이터 (멀티캠퍼스 안내의 사전지식 3줄을 4영역으로 확장)
 // ------------------------------------------------------------
 // 스키마: {
-//   id, level('필수'|'권장'|'준비'),   // level별 뱃지 색은 PrereqPage의 LEVEL_STYLE
+//   id, difficulty(1~5 난이도), level('필수'|'권장' — 중요도 구분),   // level별 뱃지 색은 PrereqPage의 LEVEL_STYLE
 //   title, summary,
 //   items: [필요한 수준 목록],
 //   check: { filename, source },       // 셀프체크 코드 (정답을 주석으로 포함) — 선택
@@ -13,6 +13,7 @@
 export default [
   {
     id: 'python',
+    difficulty: 2,
     level: '필수',
     title: '파이썬 프로그래밍 기초',
     summary: '모든 실습 코드는 파이썬으로 작성됩니다.\n문법을 보고 "무엇을 하는 코드인지" 바로 읽을 수 있어야 합니다.',
@@ -54,6 +55,7 @@ for i, (s, r) in enumerate(zip("abc", [1, 2, 3])):
   },
   {
     id: 'numpy',
+    difficulty: 2,
     level: '필수',
     title: 'NumPy 기초',
     summary: '1일차의 표 기반 알고리즘(GridWorld, Q-테이블)은 전부 NumPy 배열로 구현합니다.\nPyTorch 텐서 API도 NumPy와 거의 같아, NumPy에 익숙하면 2~3일차가 훨씬 수월합니다.',
@@ -86,6 +88,7 @@ print(np.arange(12).reshape(3, 4).sum(axis=0))   # ?
   },
   {
     id: 'dl',
+    difficulty: 3,
     level: '필수',
     title: '인공지능·머신러닝 기초',
     summary: '2일차부터 Q-테이블을 신경망으로 교체합니다(DQN). 신경망이 "학습된다"는 것이 무슨 뜻인지 개념적으로 알고 있어야 합니다.\n수식 유도까지는 필요 없습니다.',
@@ -109,6 +112,7 @@ print(np.arange(12).reshape(3, 4).sum(axis=0))   # ?
   },
   {
     id: 'math',
+    difficulty: 2,
     level: '권장',
     title: '확률·통계 기초',
     summary: '강화학습은 "기대 보상의 최대화"가 목표라 확률 언어가 계속 나옵니다.\n깊은 수학은 필요 없지만 아래 개념에 익숙하면 이론 세션이 편해집니다.',
@@ -137,47 +141,6 @@ print(a)                         # 평균 0, 표준편차 1의 연속값`,
     },
     resources: [
       { title: 'Khan Academy — 확률과 통계 (한국어)', url: 'https://ko.khanacademy.org/math/statistics-probability' },
-    ],
-  },
-  {
-    id: 'env',
-    level: '준비',
-    title: '실습 환경 준비',
-    summary: '강의장 PC에 실습 환경이 준비되지만, 개인 노트북이나 집에서 복습하려면 아래처럼 설치하세요. GPU는 없어도 됩니다 — 이번 과정의 모든 실습은 CPU로 충분합니다.',
-    items: [
-      'Python 3.10 이상 — 아나콘다 배포판으로 설치해도 좋습니다 (설치 시 "Add to PATH" 옵션 체크 권장, 가상환경 conda create -n rl python=3.10 으로 과정 전용 환경 분리 추천)',
-      'pip install torch gymnasium numpy — 필수 3종',
-      'GPU가 있는 PC라면: pytorch.org 설치 셀렉터에서 CUDA 버전에 맞는 명령을 복사해 설치 (CUDA·cuDNN 필요). 단, 이번 과정 실습은 CPU로 충분하므로 필수 아님',
-      '에디터는 자유 (VS Code, PyCharm, Jupyter)',
-      '설치가 어려우면 Google Colab에서 브라우저만으로 실습 가능 (torch 기본 내장, gymnasium만 !pip install)',
-      'Colab에서 .py 모듈을 나눠 쓸 때: 드라이브 마운트(drive.mount) 후 sys.path.append("드라이브 폴더 경로")로 import 하면 됩니다',
-    ],
-    check: {
-      filename: 'env_check.py',
-      source: `# 설치 확인 — 아래가 에러 없이 실행되면 준비 완료
-import torch
-import gymnasium as gym
-import numpy as np
-
-print("PyTorch:", torch.__version__)
-print("Gymnasium:", gym.__version__)
-print("NumPy:", np.__version__)
-
-env = gym.make("CartPole-v1")
-obs, _ = env.reset(seed=0)
-print("CartPole 관측:", obs)          # 4개 숫자가 나오면 성공
-
-x = torch.rand(5, 3)
-print(x)                              # 랜덤 텐서가 출력되면 성공
-
-# GPU(CUDA) 사용 가능 여부 확인 — 없어도 이번 과정은 CPU로 충분
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-print(f"Using device: {device}")`,
-    },
-    resources: [
-      { title: 'PyTorch 설치 가이드 (공식)', url: 'https://pytorch.org/get-started/locally/' },
-      { title: 'Google Colab', url: 'https://colab.research.google.com/' },
-      { title: '아나콘다 다운로드', url: 'https://www.anaconda.com/download' },
     ],
   },
 ]

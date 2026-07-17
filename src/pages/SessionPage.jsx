@@ -10,6 +10,7 @@ import { getDay, getSession, days, sessionKey } from '../data/curriculum.js'
 import useProgress from '../hooks/useProgress.js'
 import CodeBlock from '../components/CodeBlock.jsx'
 import DaySideNav from '../components/DaySideNav.jsx'
+import md, { stars } from '../utils/md.jsx'
 
 // 이전/다음 교시 탐색 (dir: -1 이전, +1 다음)
 // 같은 일차 안에서 먼저 찾고, 없으면 인접 일차의 첫/마지막 교시로 넘어간다.
@@ -53,18 +54,23 @@ export default function SessionPage() {
         <h1>{session.title}</h1>
         <p className="meta">
           DAY {dayId} · {session.time} · {session.kind === 'impl' ? '💻 구현 실습' : '📖 이론'}
+          {'   '}
+          <span className="meta-badges" style={{ marginLeft: 10 }}>
+            <span className="mb">난이도 <b>{stars(session.difficulty)}</b></span>
+            <span className="mb imp">중요도 <b>{stars(session.importance)}</b></span>
+          </span>
         </p>
       </div>
 
       <div className="objectives">
         <h4>🎯 학습 목표</h4>
-        <ul>{session.objectives.map((o, i) => <li key={i}>{o}</li>)}</ul>
+        <ul>{session.objectives.map((o, i) => <li key={i}>{md(o)}</li>)}</ul>
       </div>
 
       {session.theory.map((block, i) => (
         <div key={i} className="theory-block">
-          <h3>{block.h}</h3>
-          <p>{block.p}</p>
+          <h3>{md(block.h)}</h3>
+          <p>{md(block.p)}</p>
         </div>
       ))}
 

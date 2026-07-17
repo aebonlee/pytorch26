@@ -6,6 +6,7 @@ import { Link, useParams } from 'react-router-dom'
 import { getDay, sessionKey } from '../data/curriculum.js'
 import useProgress from '../hooks/useProgress.js'
 import DaySideNav from '../components/DaySideNav.jsx'
+import { stars } from '../utils/md.jsx'
 
 export default function DayPage() {
   const { dayId } = useParams()
@@ -28,7 +29,13 @@ export default function DayPage() {
           {day.sessions.map((s) => (
             <Link key={s.slot} to={`/day/${day.id}/${s.slot}`} className="session-row">
               <span className="time">{s.time}</span>
-              <span className="title">{s.slot}교시 · {s.title}</span>
+              <span className="title">
+                {s.slot}교시 · {s.title}
+                <span className="meta-badges" style={{ display: 'flex', marginTop: 2 }}>
+                  <span className="mb">난이도 <b>{stars(s.difficulty)}</b></span>
+                  <span className="mb imp">중요도 <b>{stars(s.importance)}</b></span>
+                </span>
+              </span>
               <span className={`tag ${s.kind === 'impl' ? 'impl' : ''}`}>
                 {s.kind === 'impl' ? '💻 구현 실습' : '📖 이론'}
               </span>

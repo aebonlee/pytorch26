@@ -19,6 +19,8 @@
 export default [
   {
     id: 1,
+    difficulty: 2,
+    importance: 4,
     level: '기본',
     title: 'FrozenLake — 미끄러운 얼음호수 건너기',
     env: 'FrozenLake-v1 (is_slippery=True)',
@@ -35,6 +37,8 @@ export default [
   },
   {
     id: 2,
+    difficulty: 2,
+    importance: 4,
     level: '기본',
     title: 'Taxi — SARSA vs Q-Learning 대결',
     env: 'Taxi-v3',
@@ -51,6 +55,8 @@ export default [
   },
   {
     id: 3,
+    difficulty: 3,
+    importance: 5,
     level: '응용',
     title: 'LunarLander — 달 착륙선 DQN',
     env: 'LunarLander-v3',
@@ -67,6 +73,8 @@ export default [
   },
   {
     id: 4,
+    difficulty: 3,
+    importance: 4,
     level: '응용',
     title: 'A2C 하이퍼파라미터 실험실',
     env: 'CartPole-v1',
@@ -83,6 +91,8 @@ export default [
   },
   {
     id: 5,
+    difficulty: 3,
+    importance: 5,
     level: '응용',
     title: 'Pendulum — DDPG vs SAC 대결',
     env: 'Pendulum-v1',
@@ -99,6 +109,8 @@ export default [
   },
   {
     id: 6,
+    difficulty: 4,
+    importance: 4,
     level: '심화',
     title: 'TAC — 엔트로피 지수 q 실험',
     env: 'Pendulum-v1 (심화: HalfCheetah-v5)',
@@ -115,6 +127,8 @@ export default [
   },
   {
     id: 7,
+    difficulty: 4,
+    importance: 3,
     level: '심화',
     title: 'MountainCar — Sparse Reward 정복',
     env: 'MountainCar-v0',
@@ -131,6 +145,8 @@ export default [
   },
   {
     id: 8,
+    difficulty: 5,
+    importance: 3,
     level: '자유',
     title: '토이 프로젝트 — 나만의 강화학습 문제 풀기',
     env: '자유 (커스텀 Gym 환경 / Unity ML-Agents / Atari 등)',

@@ -208,6 +208,28 @@ button { font-family: inherit; cursor: pointer; }
   font-family: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
 }
 
+/* ── 형광펜 (==텍스트== → mark.hl, utils/md.jsx) ── */
+mark.hl {
+  background: linear-gradient(transparent 42%, rgba(255, 214, 0, 0.55) 42%, rgba(255, 214, 0, 0.55) 92%, transparent 92%);
+  color: inherit;
+  padding: 0 2px;
+  border-radius: 2px;
+  font-weight: 600;
+}
+:root[data-theme='dark'] mark.hl {
+  background: linear-gradient(transparent 42%, rgba(255, 214, 0, 0.3) 42%, rgba(255, 214, 0, 0.3) 92%, transparent 92%);
+}
+.theory-block p strong, .objectives strong { color: var(--text); }
+
+/* ── 난이도·중요도 미니 뱃지 ── */
+.meta-badges { display: inline-flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.meta-badges .mb {
+  font-size: 0.76rem; color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+}
+.meta-badges .mb b { color: var(--yellow); font-weight: 600; letter-spacing: 1px; }
+.meta-badges .mb.imp b { color: var(--accent); }
+
 .code-block { margin: 26px 0; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
 .code-block .code-head {
   display: flex; justify-content: space-between; align-items: center;

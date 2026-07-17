@@ -2,9 +2,11 @@
 // 선수학습 (/prereq) — 5개 영역 셀프체크 페이지
 // 데이터·스키마는 data/prereq.js 참고 (이 파일은 렌더링만)
 // ============================================================
+import { Link } from 'react-router-dom'
 import prereq from '../data/prereq.js'
 import CodeBlock from '../components/CodeBlock.jsx'
 import SideNav from '../components/SideNav.jsx'
+import md, { stars } from '../utils/md.jsx'
 
 // level 뱃지 색: 필수=녹색(accent), 권장=노랑, 준비=파랑
 const LEVEL_STYLE = {
@@ -51,20 +53,23 @@ export default function PrereqPage() {
                 >
                   {p.level}
                 </span>
+                <span className="meta-badges" style={{ marginLeft: 10, verticalAlign: 'middle' }}>
+                  <span className="mb">난이도 <b>{stars(p.difficulty)}</b></span>
+                </span>
               </h2>
               <div className="theory-block" style={{ marginTop: 12 }}>
-                <p>{p.summary}</p>
+                <p>{md(p.summary)}</p>
               </div>
 
               <div className="objectives">
                 <h4>📋 필요한 수준</h4>
-                <ul>{p.items.map((item, j) => <li key={j}>{item}</li>)}</ul>
+                <ul>{p.items.map((item, j) => <li key={j}>{md(item)}</li>)}</ul>
               </div>
 
               {p.checklist && (
                 <div className="objectives" style={{ borderColor: 'rgba(63, 185, 80, 0.35)', background: 'rgba(63, 185, 80, 0.07)' }}>
                   <h4 style={{ color: 'var(--green)' }}>✅ 개념 셀프체크 — 아래를 설명할 수 있으면 통과</h4>
-                  <ul>{p.checklist.map((c, j) => <li key={j}>{c}</li>)}</ul>
+                  <ul>{p.checklist.map((c, j) => <li key={j}>{md(c)}</li>)}</ul>
                 </div>
               )}
 
@@ -81,6 +86,17 @@ export default function PrereqPage() {
             </div>
           )
         })}
+
+        <div className="objectives">
+          <h4>🛠 다음 단계</h4>
+          <ul>
+            <li>
+              사전 지식 점검을 마쳤다면{' '}
+              <Link to="/setup" style={{ color: 'var(--accent)', fontWeight: 700 }}>환경설정 페이지</Link>
+              에서 실습 환경을 준비하세요 (수업 전날 설치 확인까지 권장)
+            </li>
+          </ul>
+        </div>
       </section>
       </div>
     </div>
