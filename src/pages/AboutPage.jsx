@@ -61,11 +61,10 @@ export default function AboutPage() {
               </div>
             </div>
             <div style={{ flex: '1 1 300px' }}>
-              <p style={{ color: 'var(--text-dim)', fontSize: '0.95rem', lineHeight: 1.9, marginTop: 4 }}>
-                생성형 인공지능 교육과 에듀테크 플랫폼 개발을 전문으로 하는 강사입니다.
-                120여 개의 교육 사이트를 직접 설계·개발·운영하고 있습니다.
-                대학교(경기대·한신대·한국기술교육대·전남대·서울대·한국외대 등)와
-                기업·공공기관에서 AI 활용 교육을 진행하고 있습니다.
+              <p style={{ color: 'var(--text-dim)', fontSize: '0.95rem', lineHeight: 1.9, marginTop: 4, whiteSpace: 'pre-line' }}>
+                {`생성형 인공지능 교육과 에듀테크 플랫폼 개발을 전문으로 하는 강사입니다.
+120여 개의 교육 사이트를 직접 설계·개발·운영하고 있습니다.
+대학교(경기대·한신대·한국기술교육대·전남대·서울대·한국외대 등)와 기업·공공기관에서 AI 활용 교육을 진행하고 있습니다.`}
               </p>
             </div>
             <div style={{ flex: '1 1 300px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
@@ -133,10 +132,10 @@ export default function AboutPage() {
           <p style={{ marginTop: 8, fontWeight: 900, fontSize: '1.15rem', color: '#e6edf3' }}>
             "AI는 도구이고, 진짜 혁신은 사람이 만듭니다."
           </p>
-          <p style={{ marginTop: 8, fontSize: '0.9rem', lineHeight: 1.9, color: 'rgba(230,237,243,0.82)' }}>
-            교육의 핵심은 기술을 '아는 것'이 아니라 '할 수 있는 것'으로 만드는 데 있습니다.
-            이론 30% · 실습 70% 구성으로 교육 현장에서 바로 적용할 수 있는 실무 역량을 키웁니다.
-            교육이 끝난 뒤에도 이 플랫폼에서 학습이 계속 이어지도록 함께 운영합니다.
+          <p style={{ marginTop: 8, fontSize: '0.9rem', lineHeight: 1.9, color: 'rgba(230,237,243,0.82)', whiteSpace: 'pre-line' }}>
+            {`교육의 핵심은 기술을 '아는 것'이 아니라 '할 수 있는 것'으로 만드는 데 있습니다.
+이론 30% · 실습 70% 구성으로 교육 현장에서 바로 적용할 수 있는 실무 역량을 키웁니다.
+교육이 끝난 뒤에도 이 플랫폼에서 학습이 계속 이어지도록 함께 운영합니다.`}
           </p>
         </div>
       </section>

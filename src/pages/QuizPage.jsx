@@ -30,10 +30,10 @@ export default function QuizPage() {
         {submitted && (
           <div className="quiz-score">
             <div className="score">{score} / {quizzes.length}</div>
-            <p>
+            <p style={{ whiteSpace: 'pre-line' }}>
               {score === quizzes.length ? '완벽합니다! 🎉' :
-               score >= quizzes.length * 0.8 ? '훌륭합니다! 틀린 문항의 해설을 확인해 보세요.' :
-               score >= quizzes.length * 0.5 ? '좋은 출발입니다. 해당 교시로 돌아가 복습을 추천합니다.' :
+               score >= quizzes.length * 0.8 ? '훌륭합니다!\n틀린 문항의 해설을 확인해 보세요.' :
+               score >= quizzes.length * 0.5 ? '좋은 출발입니다.\n해당 교시로 돌아가 복습을 추천합니다.' :
                '해설을 읽고 각 교시 자료로 다시 복습해 보세요.'}
             </p>
           </div>

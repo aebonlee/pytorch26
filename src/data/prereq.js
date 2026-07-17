@@ -15,7 +15,7 @@ export default [
     id: 'python',
     level: '필수',
     title: '파이썬 프로그래밍 기초',
-    summary: '모든 실습 코드는 파이썬으로 작성됩니다. 문법을 보고 "무엇을 하는 코드인지" 바로 읽을 수 있어야 합니다.',
+    summary: '모든 실습 코드는 파이썬으로 작성됩니다.\n문법을 보고 "무엇을 하는 코드인지" 바로 읽을 수 있어야 합니다.',
     items: [
       '변수, 기본 자료형 (숫자·문자열·리스트·딕셔너리·튜플)',
       '조건문(if)과 반복문(for/while)',
@@ -56,7 +56,7 @@ for i, (s, r) in enumerate(zip("abc", [1, 2, 3])):
     id: 'numpy',
     level: '필수',
     title: 'NumPy 기초',
-    summary: '1일차의 표 기반 알고리즘(GridWorld, Q-테이블)은 전부 NumPy 배열로 구현합니다. PyTorch 텐서 API도 NumPy와 거의 같아, NumPy에 익숙하면 2~3일차가 훨씬 수월합니다.',
+    summary: '1일차의 표 기반 알고리즘(GridWorld, Q-테이블)은 전부 NumPy 배열로 구현합니다.\nPyTorch 텐서 API도 NumPy와 거의 같아, NumPy에 익숙하면 2~3일차가 훨씬 수월합니다.',
     items: [
       '배열 생성 (np.zeros, np.array), shape 개념',
       '인덱싱과 슬라이싱 (Q[s], Q[s][a], V.reshape(4, 4))',
@@ -88,7 +88,7 @@ print(np.arange(12).reshape(3, 4).sum(axis=0))   # ?
     id: 'dl',
     level: '필수',
     title: '인공지능·머신러닝 기초',
-    summary: '2일차부터 Q-테이블을 신경망으로 교체합니다(DQN). 신경망이 "학습된다"는 것이 무슨 뜻인지 개념적으로 알고 있어야 합니다. 수식 유도까지는 필요 없습니다.',
+    summary: '2일차부터 Q-테이블을 신경망으로 교체합니다(DQN). 신경망이 "학습된다"는 것이 무슨 뜻인지 개념적으로 알고 있어야 합니다.\n수식 유도까지는 필요 없습니다.',
     items: [
       'Neural Network — 층(layer), 가중치, 활성화 함수(ReLU)가 무엇인지',
       'Gradient Descent — 손실을 줄이는 방향으로 가중치를 조금씩 이동한다는 개념',
@@ -111,7 +111,7 @@ print(np.arange(12).reshape(3, 4).sum(axis=0))   # ?
     id: 'math',
     level: '권장',
     title: '확률·통계 기초',
-    summary: '강화학습은 "기대 보상의 최대화"가 목표라 확률 언어가 계속 나옵니다. 깊은 수학은 필요 없지만 아래 개념에 익숙하면 이론 세션이 편해집니다.',
+    summary: '강화학습은 "기대 보상의 최대화"가 목표라 확률 언어가 계속 나옵니다.\n깊은 수학은 필요 없지만 아래 개념에 익숙하면 이론 세션이 편해집니다.',
     items: [
       '확률분포와 샘플링 — "분포에서 행동을 뽑는다"의 의미',
       '기대값 E[X] — 확률 가중 평균',
