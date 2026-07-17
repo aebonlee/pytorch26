@@ -11,9 +11,10 @@ import { Link } from 'react-router-dom'
 import { days, course, sessionKey } from '../data/curriculum.js'
 import useProgress from '../hooks/useProgress.js'
 
-// 히어로 우측 파이토치 불꽃 모티프 SVG
-// — 링+점(파비콘과 같은 모티프)을 크게, 바깥 점선 궤도(.orbit)는
-//   천천히 회전, 뒷배경 글로우(.glow)는 펄스 (CSS 애니메이션)
+// 히어로 우측 파이토치 공식 로고 SVG
+// — 로고 패스는 위키미디어 공용의 공식 아이콘(PyTorch_logo_icon.svg,
+//   원본 viewBox 0.6 1067.9 90.3 109.1)을 그대로 사용, 색상도 공식 #EE4C2C.
+//   바깥 점선 궤도(.orbit)는 천천히 회전, 배경 글로우(.glow)는 펄스.
 function HeroArt() {
   return (
     <div className="hero-art" aria-hidden="true">
@@ -23,10 +24,6 @@ function HeroArt() {
             <stop offset="0" stopColor="#ee4c2c" stopOpacity="0.35" />
             <stop offset="1" stopColor="#ee4c2c" stopOpacity="0" />
           </radialGradient>
-          <linearGradient id="haRing" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stopColor="#ff7a55" />
-            <stop offset="1" stopColor="#ee4c2c" />
-          </linearGradient>
         </defs>
 
         {/* 배경 글로우 (펄스) */}
@@ -41,14 +38,16 @@ function HeroArt() {
           <circle cx="28" cy="170" r="4.5" fill="#ee4c2c" opacity="0.7" />
         </g>
 
-        {/* 파이토치 불꽃 모티프: 위가 트인 링 + 대각선 점 */}
-        <circle
-          cx="160" cy="170" r="86"
-          stroke="url(#haRing)" strokeWidth="30" strokeLinecap="round"
-          strokeDasharray="472 68"
-          transform="rotate(-43 160 170)"
-        />
-        <circle cx="224" cy="104" r="14" fill="url(#haRing)" />
+        {/* 파이토치 공식 로고 (원본 좌표계를 캔버스 중앙으로 스케일·이동) */}
+        <g transform="translate(90, 87) scale(1.53) translate(-0.6, -1067.9)">
+          <path
+            fill="#EE4C2C"
+            d="M77.6,1099.6l-8.1,8.1c13.3,13.3,13.3,34.7,0,47.8c-13.3,13.3-34.7,13.3-47.8,0
+c-13.3-13.3-13.3-34.7,0-47.8l0,0l21.1-21.1l3-3l0,0v-15.9l-31.8,31.8c-17.7,17.7-17.7,46.3,0,64c17.7,17.7,46.3,17.7,63.7,0
+C95.3,1145.8,95.3,1117.4,77.6,1099.6z"
+          />
+          <circle fill="#EE4C2C" cx="61.7" cy="1091.8" r="5.9" />
+        </g>
       </svg>
     </div>
   )
