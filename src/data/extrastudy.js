@@ -48,6 +48,12 @@ export const resources = [
     url: 'http://incompleteideas.net/book/the-book-2nd.html',
   },
   {
+    kind: '교재/강의',
+    title: '파이토치 한국 사용자 모임 — 예제로 배우는 PyTorch',
+    desc: 'PyTorch 공식 튜토리얼 한국어 번역 — 2일차 PyTorch 기초를 한국어로 복습할 때 최적',
+    url: 'https://tutorials.pytorch.kr/beginner/pytorch_with_examples.html',
+  },
+  {
     kind: '코드',
     title: 'CleanRL',
     desc: '알고리즘당 단일 파일 구현체 모음 — DQN부터 SAC·PPO까지, 이번 과정 스타일과 가장 가까운 레퍼런스',

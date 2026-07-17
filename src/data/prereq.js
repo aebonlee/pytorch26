@@ -145,10 +145,12 @@ print(a)                         # 평균 0, 표준편차 1의 연속값`,
     title: '실습 환경 준비',
     summary: '강의장 PC에 실습 환경이 준비되지만, 개인 노트북이나 집에서 복습하려면 아래처럼 설치하세요. GPU는 없어도 됩니다 — 이번 과정의 모든 실습은 CPU로 충분합니다.',
     items: [
-      'Python 3.10 이상',
+      'Python 3.10 이상 — 아나콘다 배포판으로 설치해도 좋습니다 (설치 시 "Add to PATH" 옵션 체크 권장, 가상환경 conda create -n rl python=3.10 으로 과정 전용 환경 분리 추천)',
       'pip install torch gymnasium numpy — 필수 3종',
+      'GPU가 있는 PC라면: pytorch.org 설치 셀렉터에서 CUDA 버전에 맞는 명령을 복사해 설치 (CUDA·cuDNN 필요). 단, 이번 과정 실습은 CPU로 충분하므로 필수 아님',
       '에디터는 자유 (VS Code, PyCharm, Jupyter)',
       '설치가 어려우면 Google Colab에서 브라우저만으로 실습 가능 (torch 기본 내장, gymnasium만 !pip install)',
+      'Colab에서 .py 모듈을 나눠 쓸 때: 드라이브 마운트(drive.mount) 후 sys.path.append("드라이브 폴더 경로")로 import 하면 됩니다',
     ],
     check: {
       filename: 'env_check.py',
@@ -165,12 +167,17 @@ env = gym.make("CartPole-v1")
 obs, _ = env.reset(seed=0)
 print("CartPole 관측:", obs)          # 4개 숫자가 나오면 성공
 
-x = torch.randn(3, 4)
-print("텐서 shape:", x.shape)         # torch.Size([3, 4])`,
+x = torch.rand(5, 3)
+print(x)                              # 랜덤 텐서가 출력되면 성공
+
+# GPU(CUDA) 사용 가능 여부 확인 — 없어도 이번 과정은 CPU로 충분
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+print(f"Using device: {device}")`,
     },
     resources: [
       { title: 'PyTorch 설치 가이드 (공식)', url: 'https://pytorch.org/get-started/locally/' },
       { title: 'Google Colab', url: 'https://colab.research.google.com/' },
+      { title: '아나콘다 다운로드', url: 'https://www.anaconda.com/download' },
     ],
   },
 ]
