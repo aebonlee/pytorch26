@@ -61,9 +61,8 @@ export default function Layout() {
       <footer className="site-footer">
         <div className="container">
           PyTorch로 배우는 강화학습 · 멀티캠퍼스 역삼캠퍼스 · 2026.07.27 ~ 07.29
-          <br />
-          강사 이애본 · DreamIT Biz
           <div className="footer-contact">
+            <span>강사 이애본 · DreamIT Biz</span>
             <a href="mailto:aebon@dreamitbiz.com">✉️ aebon@dreamitbiz.com</a>
             <a href="tel:010-3700-0629">📞 010-3700-0629</a>
             <span>💬 카카오톡 ID: aebon</span>
