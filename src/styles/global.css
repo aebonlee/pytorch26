@@ -533,6 +533,11 @@ mark.hl {
   border-top: 1px solid var(--border); padding: 32px 0; margin-top: 40px;
   text-align: center; color: var(--text-dim); font-size: 0.85rem;
 }
+.footer-contact {
+  display: flex; justify-content: center; flex-wrap: wrap;
+  gap: 8px 22px; margin-top: 12px; font-size: 0.82rem;
+}
+.footer-contact a:hover { color: var(--accent); }
 
 /* ── Table ──────────────────────────── */
 .info-table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }

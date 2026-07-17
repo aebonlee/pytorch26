@@ -63,6 +63,12 @@ export default function Layout() {
           PyTorch로 배우는 강화학습 · 멀티캠퍼스 역삼캠퍼스 · 2026.07.27 ~ 07.29
           <br />
           강사 이애본 · DreamIT Biz
+          <div className="footer-contact">
+            <a href="mailto:aebon@dreamitbiz.com">✉️ aebon@dreamitbiz.com</a>
+            <a href="tel:010-3700-0629">📞 010-3700-0629</a>
+            <span>💬 카카오톡 ID: aebon</span>
+            <span>🕘 평일 09:00 ~ 18:00</span>
+          </div>
         </div>
       </footer>
     </>
