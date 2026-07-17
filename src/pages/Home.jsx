@@ -46,7 +46,7 @@ function HeroArt() {
           cx="160" cy="170" r="86"
           stroke="url(#haRing)" strokeWidth="30" strokeLinecap="round"
           strokeDasharray="472 68"
-          transform="rotate(-8 160 170)"
+          transform="rotate(-43 160 170)"
         />
         <circle cx="224" cy="104" r="14" fill="url(#haRing)" />
       </svg>
@@ -98,31 +98,58 @@ export default function Home() {
       <section className="section">
         <div className="container">
           <h2><span className="num">01</span>일자별 시간표</h2>
-          {days.map((day) => {
-            const done = day.sessions.filter((s) => progress[sessionKey(day.id, s.slot)]).length
-            return (
-              <div key={day.id} className="tt-day">
-                <div className="tt-head">
-                  <Link to={`/day/${day.id}`} className="d">DAY {day.id}</Link>
-                  <span className="theme">{day.theme}</span>
-                  <span className="date">{day.date} · 진행 {done}/{day.sessions.length}교시</span>
-                </div>
-                <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: 'var(--radius)', overflow: 'hidden' }}>
-                  {day.sessions.map((s) => (
-                    <Link key={s.slot} to={`/day/${day.id}/${s.slot}`} className="tt-row">
-                      <span className="time">{s.time}</span>
-                      <span className="slot">{s.slot}교시</span>
-                      <span className="title">{s.title}</span>
-                      <span className={`tag ${s.kind === 'impl' ? 'impl' : ''}`}>
-                        {s.kind === 'impl' ? '💻 실습' : '📖 이론'}
+          {/* 2×2 박스: [3일 소개(주제만) | 1일차] / [2일차 | 3일차] — 대표 지정 배치 */}
+          <div className="tt-grid">
+            <div className="tt-day tt-intro">
+              <div className="tt-head">
+                <span className="d">3일 한눈에</span>
+                <span className="date">총 21교시 · 매일 09:30 ~ 17:30</span>
+              </div>
+              <div className="tt-box">
+                {days.map((day) => (
+                  <Link key={day.id} to={`/day/${day.id}`} className="tt-row">
+                    <span className="slot" style={{ flexBasis: 64 }}>DAY {day.id}</span>
+                    <span className="title">
+                      {day.theme}
+                      <span style={{ display: 'block', fontSize: '0.78rem', fontWeight: 500, color: 'var(--text-dim)', marginTop: 2 }}>
+                        {day.date}
                       </span>
-                      <span className={`check ${progress[sessionKey(day.id, s.slot)] ? 'done' : ''}`}>✔</span>
-                    </Link>
-                  ))}
+                    </span>
+                  </Link>
+                ))}
+                <div style={{ padding: '12px 16px', fontSize: '0.82rem', color: 'var(--text-dim)' }}>
+                  표 기반 기초 → 신경망(DQN·A2C) → 연속 제어(DDPG·SAC·TAC)로
+                  3일간 알고리즘 계보를 따라 올라갑니다.
                 </div>
               </div>
-            )
-          })}
+            </div>
+
+            {days.map((day) => {
+              const done = day.sessions.filter((s) => progress[sessionKey(day.id, s.slot)]).length
+              return (
+                <div key={day.id} className="tt-day">
+                  <div className="tt-head">
+                    <Link to={`/day/${day.id}`} className="d">DAY {day.id}</Link>
+                    <span className="theme">{day.theme}</span>
+                    <span className="date">{day.date} · 진행 {done}/{day.sessions.length}교시</span>
+                  </div>
+                  <div className="tt-box">
+                    {day.sessions.map((s) => (
+                      <Link key={s.slot} to={`/day/${day.id}/${s.slot}`} className="tt-row">
+                        <span className="time">{s.time}</span>
+                        <span className="slot">{s.slot}교시</span>
+                        <span className="title">{s.title}</span>
+                        <span className={`tag ${s.kind === 'impl' ? 'impl' : ''}`}>
+                          {s.kind === 'impl' ? '💻' : '📖'}
+                        </span>
+                        <span className={`check ${progress[sessionKey(day.id, s.slot)] ? 'done' : ''}`}>✔</span>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )
+            })}
+          </div>
         </div>
       </section>
 

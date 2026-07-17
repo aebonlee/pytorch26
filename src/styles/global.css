@@ -492,8 +492,18 @@ mark.hl {
 }
 .tab-row .tab .cnt { font-size: 0.75rem; font-weight: 600; margin-left: 6px; opacity: 0.8; }
 
-/* ── 홈 일자별 시간표 ─────────────────── */
-.tt-day { margin-bottom: 26px; }
+/* ── 홈 일자별 시간표 (2×2 박스: 소개/1일차/2일차/3일차) ── */
+.tt-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+  align-items: start;
+}
+@media (max-width: 900px) { .tt-grid { grid-template-columns: 1fr; } }
+.tt-box {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden;
+}
+.tt-intro .tt-row .title { font-weight: 750; }
+.tt-day { margin-bottom: 6px; }
 .tt-day .tt-head {
   display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
   margin-bottom: 10px;
