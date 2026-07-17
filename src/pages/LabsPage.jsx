@@ -20,8 +20,8 @@ export default function LabsPage() {
     ...d.sessions.filter((s) => s.code).map((s) => ({
       key: `d${d.id}s${s.slot}`,
       anchor: `labs-d${d.id}s${s.slot}`,
-      sub: s.code.filename,
-      label: `${s.slot}교시 ${s.title}`,
+      sub: `${s.slot}교시- ${s.code.filename}`,
+      label: s.title,
     })),
   ])
 

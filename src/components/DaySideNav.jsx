@@ -22,11 +22,12 @@ export default function DaySideNav({ dayId, currentSlot, progress }) {
     </div>
   )
 
+  // 표기 형식(대표 지정): 윗줄 "n교시- 시간" / 아랫줄 제목
   const items = day.sessions.map((s) => ({
     key: s.slot,
     to: `/day/${day.id}/${s.slot}`,
-    sub: s.time,
-    label: `${s.slot}교시 · ${s.title}`,
+    sub: `${s.slot}교시- ${s.time}`,
+    label: s.title,
     active: Number(currentSlot) === s.slot,
     done: !!progress[sessionKey(day.id, s.slot)],
   }))
