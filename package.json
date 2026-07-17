@@ -1,0 +1,21 @@
+{
+  "name": "pytorch26",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "homepage": "https://aebonlee.github.io/pytorch26/",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-router-dom": "^7.1.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.0.1",
+    "vite": "^8.0.1"
+  }
+}
