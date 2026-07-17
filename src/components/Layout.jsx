@@ -1,7 +1,17 @@
+// ============================================================
+// 공통 레이아웃: 헤더(로고+메뉴+테마토글) / <Outlet /> / 푸터
+// ------------------------------------------------------------
+// 테마 전환 동작:
+//   1) index.html 인라인 스크립트가 첫 페인트 전에 localStorage
+//      값을 <html data-theme>에 넣는다 (깜빡임 방지, 기본 light)
+//   2) 이 컴포넌트의 초기 state는 그 DOM 값을 그대로 읽는다
+//   3) 토글 시 DOM 속성 + localStorage + state를 함께 갱신
+// 즉 "진실의 원본"은 <html data-theme> 속성이다.
+// ============================================================
 import { useState } from 'react'
 import { Outlet, NavLink } from 'react-router-dom'
 
-const THEME_KEY = 'pytorch26_theme'
+const THEME_KEY = 'pytorch26_theme'   // index.html 인라인 스크립트와 반드시 동일해야 함
 
 export default function Layout() {
   const [theme, setTheme] = useState(

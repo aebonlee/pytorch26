@@ -1,3 +1,22 @@
+// ============================================================
+// 커리큘럼 데이터 집계 모듈 (콘텐츠의 단일 진입점)
+// ------------------------------------------------------------
+// 콘텐츠 수정은 여기가 아니라 day1~3.js에서 한다.
+//
+// 세션 데이터 스키마 (day1~3.js 공통):
+//   {
+//     slot: 1~7,                 // 교시 번호 (URL의 :slot)
+//     time: '09:30 ~ 10:30',
+//     title: '강의명',
+//     kind: 'theory' | 'impl',   // 목록의 이론/구현 뱃지 구분
+//     objectives: [ ... ],       // 학습 목표 (상단 녹색 박스)
+//     theory: [{ h: 소제목, p: 본문 }],  // p의 \n은 CSS white-space:
+//                                        // pre-line으로 줄바꿈 렌더링
+//     code: { filename, source } // 실습 코드 (CodeBlock으로 표시)
+//   }
+// 새 교시 추가 시: 해당 day 파일에 세션 객체만 추가하면
+// 목록·상세·진도·이전/다음 네비게이션이 모두 자동 반영된다.
+// ============================================================
 import day1 from './day1.js'
 import day2 from './day2.js'
 import day3 from './day3.js'
@@ -30,15 +49,18 @@ export const course = {
   ],
 }
 
+// URL 파라미터(문자열)로 일차 조회 — 없으면 undefined
 export function getDay(dayId) {
   return days.find((d) => d.id === Number(dayId))
 }
 
+// 일차+교시로 세션 조회 — 없으면 undefined (페이지에서 안내문 처리)
 export function getSession(dayId, slot) {
   const day = getDay(dayId)
   return day?.sessions.find((s) => s.slot === Number(slot))
 }
 
+// 진도 저장용 키 생성 ("d1s3" 형태) — useProgress의 localStorage 키와 짝
 export function sessionKey(dayId, slot) {
   return `d${dayId}s${slot}`
 }

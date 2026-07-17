@@ -1,4 +1,11 @@
-// 2일차 — Value-based methods & Policy-based methods
+// ============================================================
+// 2일차 — Value-based & Policy-based methods (공식 목차 7교시)
+// ------------------------------------------------------------
+// 코드 재사용 흐름: 1교시 ReplayBuffer + 3교시 QNetwork를
+// 4교시 DQN 실습이 조립한다(DOUBLE 플래그로 DDQN 전환).
+// 6교시 ActorCritic 네트워크를 7교시 A2C 루프가 사용.
+// ReplayBuffer는 3일차 DDPG·SAC에서도 계속 쓰인다.
+// ============================================================
 export default {
   id: 2,
   date: '2026-07-28 (화)',

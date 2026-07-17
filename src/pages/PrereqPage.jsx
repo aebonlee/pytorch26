@@ -1,6 +1,11 @@
+// ============================================================
+// 선수학습 (/prereq) — 5개 영역 셀프체크 페이지
+// 데이터·스키마는 data/prereq.js 참고 (이 파일은 렌더링만)
+// ============================================================
 import prereq from '../data/prereq.js'
 import CodeBlock from '../components/CodeBlock.jsx'
 
+// level 뱃지 색: 필수=녹색(accent), 권장=노랑, 준비=파랑
 const LEVEL_STYLE = {
   필수: { color: 'var(--accent)', border: 'rgba(238, 76, 44, 0.4)' },
   권장: { color: 'var(--yellow)', border: 'rgba(210, 153, 34, 0.5)' },

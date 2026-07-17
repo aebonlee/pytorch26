@@ -1,3 +1,7 @@
+// ============================================================
+// 심화학습 (/extra) — 도전과제 4단계 + 추천자료 12종
+// 데이터는 data/extrastudy.js에서 관리 (이 파일은 렌더링만)
+// ============================================================
 import { challenges, resources } from '../data/extrastudy.js'
 
 export default function ExtraPage() {

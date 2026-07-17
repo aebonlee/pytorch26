@@ -1,3 +1,9 @@
+// ============================================================
+// 홈: 히어로(과정 요약) → 3일 카드(진도율 바) → 학습목표 →
+//     사전지식/학습대상 → 교육 개요 표
+// 과정 메타 정보(일정·장소·목표 등) 수정은 curriculum.js의
+// course 객체에서 한다 — 이 파일은 렌더링만.
+// ============================================================
 import { Link } from 'react-router-dom'
 import { days, course, sessionKey } from '../data/curriculum.js'
 import useProgress from '../hooks/useProgress.js'

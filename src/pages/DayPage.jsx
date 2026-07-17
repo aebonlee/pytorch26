@@ -1,3 +1,7 @@
+// ============================================================
+// 일차 페이지 (/day/:dayId): 해당 일차의 7교시 목록
+// 각 행 = 시간 · 제목 · 이론/구현 뱃지 · 완료 체크(진도)
+// ============================================================
 import { Link, useParams } from 'react-router-dom'
 import { getDay, sessionKey } from '../data/curriculum.js'
 import useProgress from '../hooks/useProgress.js'

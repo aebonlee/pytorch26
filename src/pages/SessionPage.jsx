@@ -1,8 +1,18 @@
+// ============================================================
+// 교시 상세 (/day/:dayId/:slot)
+// 구성: 학습목표 → 이론 블록들 → 실습 코드 → 완료 버튼
+//       → (마지막 교시 한정) 퀴즈/심화 안내 → 이전/다음 네비
+// findAdjacent가 일차 경계를 넘어 이전/다음 교시를 찾아 주므로
+// 1일차 7교시 "다음"은 자동으로 2일차 1교시가 된다.
+// ============================================================
 import { Link, useParams } from 'react-router-dom'
 import { getDay, getSession, days, sessionKey } from '../data/curriculum.js'
 import useProgress from '../hooks/useProgress.js'
 import CodeBlock from '../components/CodeBlock.jsx'
 
+// 이전/다음 교시 탐색 (dir: -1 이전, +1 다음)
+// 같은 일차 안에서 먼저 찾고, 없으면 인접 일차의 첫/마지막 교시로 넘어간다.
+// 과정의 맨 처음/맨 끝이면 null을 반환해 해당 버튼을 숨긴다.
 function findAdjacent(dayId, slot, dir) {
   const day = getDay(dayId)
   const target = Number(slot) + dir

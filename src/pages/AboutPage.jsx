@@ -1,3 +1,11 @@
+// ============================================================
+// About (/about): 개발취지 3단락 + 강사소개 + 교육개요 표
+// ------------------------------------------------------------
+// 강사소개는 skala.dreamitbiz.com/about/instructor 내용 기준
+// (2026-07-17 대표 지정). 프로필 사진은 public/aebon.jpeg —
+// SKALA 리포에서 복사해 온 파일. 경력·전문분야를 수정할 일이
+// 생기면 SKALA 쪽 InstructorIntro.jsx와 함께 맞춰줄 것.
+// ============================================================
 import { Link } from 'react-router-dom'
 import { course } from '../data/curriculum.js'
 
