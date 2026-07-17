@@ -12,6 +12,11 @@
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='55' r='32' fill='none' stroke='%23EE4C2C' stroke-width='12'/%3E%3Ccircle cx='68' cy='22' r='8' fill='%23EE4C2C'/%3E%3C/svg%3E" />
   </head>
   <body>
+    <script>
+      // 첫 페인트 전에 저장된 테마 적용 (깜빡임 방지) — 기본은 라이트(강의장 빔프로젝터용)
+      document.documentElement.dataset.theme =
+        localStorage.getItem('pytorch26_theme') || 'light'
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

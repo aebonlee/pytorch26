@@ -1,6 +1,20 @@
+import { useState } from 'react'
 import { Outlet, NavLink } from 'react-router-dom'
 
+const THEME_KEY = 'pytorch26_theme'
+
 export default function Layout() {
+  const [theme, setTheme] = useState(
+    () => document.documentElement.dataset.theme || 'light',
+  )
+
+  const toggleTheme = () => {
+    const next = theme === 'light' ? 'dark' : 'light'
+    document.documentElement.dataset.theme = next
+    localStorage.setItem(THEME_KEY, next)
+    setTheme(next)
+  }
+
   return (
     <>
       <header className="site-header">
@@ -16,6 +30,13 @@ export default function Layout() {
             <NavLink to="/day/3">3일차</NavLink>
             <NavLink to="/quiz">복습퀴즈</NavLink>
             <NavLink to="/extra">심화학습</NavLink>
+            <button
+              className="theme-toggle"
+              onClick={toggleTheme}
+              title={theme === 'light' ? '다크 모드로 전환' : '라이트 모드로 전환'}
+            >
+              {theme === 'light' ? '🌙' : '☀️'}
+            </button>
           </nav>
         </div>
       </header>

@@ -1,17 +1,33 @@
-:root {
+:root,
+:root[data-theme='light'] {
+  --bg: #f7f8fa;
+  --bg-soft: #edf0f4;
+  --bg-card: #ffffff;
+  --border: #dde2ea;
+  --text: #1a2230;
+  --text-dim: #5b6675;
+  --accent: #ee4c2c;        /* PyTorch orange */
+  --accent-soft: rgba(238, 76, 44, 0.09);
+  --green: #1a8a3d;
+  --blue: #0969da;
+  --yellow: #9a6700;
+  --code-bg: #0b0f14;       /* 코드 블록은 항상 다크 (가독성) */
+  --header-bg: rgba(247, 248, 250, 0.92);
+  --radius: 12px;
+}
+
+:root[data-theme='dark'] {
   --bg: #0d1117;
   --bg-soft: #161b22;
   --bg-card: #1c2330;
   --border: #2d3646;
   --text: #e6edf3;
   --text-dim: #9aa7b8;
-  --accent: #ee4c2c;        /* PyTorch orange */
   --accent-soft: rgba(238, 76, 44, 0.12);
   --green: #3fb950;
   --blue: #58a6ff;
   --yellow: #d29922;
-  --code-bg: #0b0f14;
-  --radius: 12px;
+  --header-bg: rgba(13, 17, 23, 0.92);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -34,7 +50,7 @@ button { font-family: inherit; cursor: pointer; }
 /* ── Header ─────────────────────────── */
 .site-header {
   position: sticky; top: 0; z-index: 50;
-  background: rgba(13, 17, 23, 0.92);
+  background: var(--header-bg);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--border);
 }
@@ -56,6 +72,12 @@ button { font-family: inherit; cursor: pointer; }
 }
 .nav a:hover { color: var(--text); background: var(--bg-card); }
 .nav a.active { color: var(--accent); background: var(--accent-soft); }
+.theme-toggle {
+  margin-left: 6px; padding: 6px 11px; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--bg-card);
+  color: var(--text-dim); font-size: 0.85rem; line-height: 1;
+}
+.theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
 
 /* ── Hero ───────────────────────────── */
 .hero { padding: 64px 0 48px; text-align: center; }
@@ -160,8 +182,8 @@ button { font-family: inherit; cursor: pointer; }
 }
 .theory-block p { color: var(--text-dim); font-size: 0.95rem; margin-bottom: 8px; white-space: pre-line; }
 .theory-block code {
-  background: var(--bg-card); padding: 2px 6px; border-radius: 5px;
-  font-size: 0.85em; color: #ffa657;
+  background: var(--bg-soft); padding: 2px 6px; border-radius: 5px;
+  font-size: 0.85em; color: var(--accent);
   font-family: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
 }
 
