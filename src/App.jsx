@@ -6,8 +6,10 @@
 //   /prereq          → PrereqPage  선수학습 5영역 셀프체크
 //   /day/:dayId      → DayPage     해당 일차의 7교시 목록
 //   /day/:dayId/:slot→ SessionPage 교시 상세(이론+코드+완료버튼)
+//   /labs            → LabsPage    실습소스 모음(21교시 코드 집약)
+//   /projects        → ProjectsPage 미니 프로젝트 8종(결과 인증)
 //   /quiz            → QuizPage    복습퀴즈 15문항(제출 후 해설)
-//   /extra           → ExtraPage   도전과제 4단계 + 추천자료 12종
+//   /extra           → ExtraPage   추천자료 13종
 //   그 외            → Home으로 폴백 (404 페이지 없음)
 // ============================================================
 import { Routes, Route } from 'react-router-dom'
@@ -19,6 +21,8 @@ import QuizPage from './pages/QuizPage.jsx'
 import ExtraPage from './pages/ExtraPage.jsx'
 import AboutPage from './pages/AboutPage.jsx'
 import PrereqPage from './pages/PrereqPage.jsx'
+import LabsPage from './pages/LabsPage.jsx'
+import ProjectsPage from './pages/ProjectsPage.jsx'
 
 export default function App() {
   return (
@@ -29,6 +33,8 @@ export default function App() {
         <Route path="/prereq" element={<PrereqPage />} />
         <Route path="/day/:dayId" element={<DayPage />} />
         <Route path="/day/:dayId/:slot" element={<SessionPage />} />
+        <Route path="/labs" element={<LabsPage />} />
+        <Route path="/projects" element={<ProjectsPage />} />
         <Route path="/quiz" element={<QuizPage />} />
         <Route path="/extra" element={<ExtraPage />} />
         <Route path="*" element={<Home />} />
