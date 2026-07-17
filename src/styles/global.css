@@ -4,11 +4,12 @@
    - <html data-theme="light|dark"> 속성으로 전환된다.
      (index.html 인라인 스크립트가 첫 페인트 전에 localStorage
       'pytorch26_theme' 값을 읽어 적용 — 깜빡임 방지, 기본 light)
-   - 시그니처 컬러(--accent)는 녹색. 2026-07-17 대표 요청으로
-     PyTorch 오렌지(#EE4C2C) → 녹색으로 변경했다.
+   - 시그니처 컬러(--accent)는 PyTorch 오렌지(#EE4C2C) 고정.
+     (2026-07-17 대표 확정 — 녹색으로 바꾸지 말 것.
+      녹색은 실습 코드 블록 안의 파이썬 주석 폰트 색에만 사용:
+      아래 .code-comment 참고)
    - --green  : 성공/완료 표시(진도 체크, 정답)
-     --red    : 퀴즈 오답 표시 전용. accent가 녹색이 되면서
-                오답까지 accent로 칠하면 정답과 혼동되므로 분리
+     --red    : 퀴즈 오답 표시 전용(정답 녹색과 혼동 방지)
      --code-bg: 코드 블록 배경 — 두 테마 모두 다크 고정(가독성).
                 라이트로 바꾸지 말 것
    ============================================================ */
@@ -20,8 +21,8 @@
   --border: #dde2ea;
   --text: #1a2230;
   --text-dim: #5b6675;      /* 본문 보조 텍스트 */
-  --accent: #15803d;        /* 시그니처 녹색 (light) */
-  --accent-soft: rgba(21, 128, 61, 0.09);
+  --accent: #ee4c2c;        /* PyTorch 오렌지 (시그니처) */
+  --accent-soft: rgba(238, 76, 44, 0.09);
   --green: #1a8a3d;         /* 성공/완료 */
   --red: #d1242f;           /* 퀴즈 오답 */
   --blue: #0969da;
@@ -39,8 +40,7 @@
   --border: #2d3646;
   --text: #e6edf3;
   --text-dim: #9aa7b8;
-  --accent: #3fb950;        /* 시그니처 녹색 (dark — 어두운 배경 대비용으로 밝게) */
-  --accent-soft: rgba(63, 185, 80, 0.12);
+  --accent-soft: rgba(238, 76, 44, 0.12);
   --green: #3fb950;
   --red: #f85149;
   --blue: #58a6ff;
@@ -224,6 +224,9 @@ button { font-family: inherit; cursor: pointer; }
   font-family: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
   color: #c9d1d9;
 }
+/* 파이썬 주석(#...) 전용 녹색 폰트 — 코드 배경이 항상 다크이므로
+   테마와 무관하게 밝은 녹색 하나로 충분 (CodeBlock.jsx가 감싼다) */
+.code-block .code-comment { color: #7ee787; }
 
 .session-nav {
   display: flex; justify-content: space-between; gap: 12px;
