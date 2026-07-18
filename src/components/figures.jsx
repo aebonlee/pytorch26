@@ -424,6 +424,304 @@ function SkateCurves() {
   )
 }
 
+// ── 13. Q네트워크 입출력 설계 ──────────────────────────────
+function QnetIO() {
+  const qs = [{ v: '0.4' }, { v: '1.7', best: true }, { v: '-0.2' }, { v: '0.9' }]
+  return (
+    <svg viewBox="0 0 640 230" fill="none">
+      <defs><ArrowDef id="qi-d" color={DIM} /><ArrowDef id="qi-a" color={ACC} /></defs>
+      <rect x="40" y="80" width="130" height="60" rx="10" stroke={BRD} strokeWidth="2" fill="var(--bg-soft)" />
+      <text x="105" y="106" textAnchor="middle" fill={TXT} fontSize="13.5" fontWeight="800">상태 s</text>
+      <text x="105" y="126" textAnchor="middle" fill={DIM} fontSize="10.5">벡터 (S,) / 이미지</text>
+      <line x1="170" y1="110" x2="226" y2="110" stroke={DIM} strokeWidth="2" markerEnd="url(#qi-d)" />
+      <rect x="230" y="60" width="150" height="100" rx="12" stroke={ACC} strokeWidth="2.2" fill="var(--accent-soft)" />
+      <text x="305" y="105" textAnchor="middle" fill={TXT} fontSize="14" fontWeight="800">QNetwork</text>
+      <text x="305" y="126" textAnchor="middle" fill={DIM} fontSize="10.5">순전파 1회</text>
+      <line x1="380" y1="110" x2="436" y2="110" stroke={DIM} strokeWidth="2" markerEnd="url(#qi-d)" />
+      {qs.map((q, i) => (
+        <g key={i}>
+          <rect x="440" y={38 + i * 40} width="110" height="32" rx="7"
+            stroke={q.best ? ACC : BRD} strokeWidth={q.best ? 2.4 : 1.5}
+            fill={q.best ? 'var(--accent-soft)' : 'var(--bg-soft)'} />
+          <text x="495" y={59 + i * 40} textAnchor="middle" fill={q.best ? ACC : TXT} fontSize="12" fontWeight="700">
+            Q(s, a{i + 1}) = {q.v}
+          </text>
+        </g>
+      ))}
+      <path d="M 552 94 C 590 94, 600 94, 606 94" stroke={ACC} strokeWidth="2.2" markerEnd="url(#qi-a)" />
+      <text x="612" y="86" fill={ACC} fontSize="11.5" fontWeight="800" textAnchor="end" transform="rotate(-90 612 86)"> </text>
+      <text x="596" y="72" fill={ACC} fontSize="11.5" fontWeight="800">argmax</text>
+      <text x="320" y="215" textAnchor="middle" fill={DIM} fontSize="12">상태만 넣으면 모든 행동의 Q가 한 번에 — argmax·max가 순전파 1회로 해결 (이산 행동 전용)</text>
+    </svg>
+  )
+}
+
+// ── 14. gather 동작 (배치에서 선택 행동의 Q 추출) ───────────
+function GatherDiagram() {
+  const M = [
+    ['0.4', '1.7', '-0.2'],
+    ['0.9', '0.1', '0.6'],
+    ['-0.3', '0.8', '1.2'],
+    ['0.5', '-0.1', '0.3'],
+  ]
+  const picks = [1, 0, 2, 0]
+  return (
+    <svg viewBox="0 0 640 250" fill="none">
+      <defs><ArrowDef id="ga-a" color={ACC} /></defs>
+      <text x="150" y="30" textAnchor="middle" fill={TXT} fontSize="12.5" fontWeight="800">Q 출력 (B=4, A=3)</text>
+      {M.map((row, r) =>
+        row.map((v, c) => {
+          const hit = picks[r] === c
+          return (
+            <g key={r + '-' + c}>
+              <rect x={60 + c * 62} y={44 + r * 42} width="54" height="34" rx="6"
+                stroke={hit ? ACC : BRD} strokeWidth={hit ? 2.4 : 1.2}
+                fill={hit ? 'var(--accent-soft)' : 'var(--bg-soft)'} />
+              <text x={87 + c * 62} y={66 + r * 42} textAnchor="middle" fill={hit ? ACC : DIM} fontSize="12" fontWeight={hit ? 800 : 500}>{v}</text>
+            </g>
+          )
+        })
+      )}
+      <text x="330" y="30" textAnchor="middle" fill={TXT} fontSize="12.5" fontWeight="800">행동 a</text>
+      {picks.map((p, r) => (
+        <g key={r}>
+          <rect x="300" y={44 + r * 42} width="54" height="34" rx="6" stroke={BRD} strokeWidth="1.2" fill="var(--bg-card)" />
+          <text x="327" y={66 + r * 42} textAnchor="middle" fill={TXT} fontSize="12" fontWeight="700">{p}</text>
+        </g>
+      ))}
+      <path d="M 360 128 L 428 128" stroke={ACC} strokeWidth="2.2" markerEnd="url(#ga-a)" />
+      <text x="394" y="118" textAnchor="middle" fill={ACC} fontSize="11" fontWeight="700">gather</text>
+      <text x="510" y="30" textAnchor="middle" fill={TXT} fontSize="12.5" fontWeight="800">선택 행동의 Q (B,)</text>
+      {picks.map((p, r) => (
+        <g key={r}>
+          <rect x="470" y={44 + r * 42} width="80" height="34" rx="6" stroke={ACC} strokeWidth="1.8" fill="var(--accent-soft)" />
+          <text x="510" y={66 + r * 42} textAnchor="middle" fill={ACC} fontSize="12" fontWeight="800">{M[r][p]}</text>
+        </g>
+      ))}
+      <text x="320" y="240" textAnchor="middle" fill={DIM} fontSize="12">q.gather(1, a.unsqueeze(1)).squeeze(1) — 각 행에서 "실제 했던 행동"의 Q만 뽑아 손실에 건다</text>
+    </svg>
+  )
+}
+
+// ── 15. Q 과대평가 (DQN vs DDQN vs 실제) ───────────────────
+function Overestimation() {
+  const X0 = 80, Y0 = 195, W = 480
+  const mk = (fn) =>
+    Array.from({ length: 101 }, (_, i) => {
+      const t = i / 100
+      const [x, y] = [X0 + t * W, Y0 - fn(t) * 150]
+      return (i === 0 ? 'M' : 'L') + x.toFixed(1) + ',' + y.toFixed(1)
+    }).join(' ')
+  const truth = (t) => 0.55 * (1 - Math.exp(-4 * t))
+  const dqn = (t) => truth(t) + 0.32 * (1 - Math.exp(-3 * t))
+  const ddqn = (t) => truth(t) + 0.05 * (1 - Math.exp(-3 * t))
+  return (
+    <svg viewBox="0 0 640 240" fill="none">
+      <line x1={X0} y1={Y0} x2={X0 + W} y2={Y0} stroke={BRD} strokeWidth="1.5" />
+      <line x1={X0} y1={Y0} x2={X0} y2="25" stroke={BRD} strokeWidth="1.5" />
+      <path d={mk(dqn)} stroke={ACC} strokeWidth="2.5" />
+      <path d={mk(ddqn)} stroke={BLU} strokeWidth="2.5" />
+      <path d={mk(truth)} stroke={GRN} strokeWidth="2.5" strokeDasharray="7 5" />
+      <text x={X0 + 300} y="55" fill={ACC} fontSize="12.5" fontWeight="700">DQN의 Q 추정 — 체계적 과대평가</text>
+      <text x={X0 + 330} y="112" fill={BLU} fontSize="12.5" fontWeight="700">Double DQN 추정</text>
+      <text x={X0 + 330} y="145" fill={GRN} fontSize="12.5" fontWeight="700">실제 리턴 (참값)</text>
+      <text x={X0 + W} y={Y0 + 18} textAnchor="end" fill={DIM} fontSize="11">학습 진행 →</text>
+      <text x="30" y="110" fill={DIM} fontSize="12" transform="rotate(-90 30 110)" textAnchor="middle">Q값</text>
+      <text x="320" y="233" textAnchor="middle" fill={DIM} fontSize="12">max의 최대화 편향은 누적된다 — 선택/평가를 분리하면 참값에 근접 (van Hasselt 2015의 관찰)</text>
+    </svg>
+  )
+}
+
+// ── 16. Dueling DQN 분해 ───────────────────────────────────
+function DuelingDiagram() {
+  return (
+    <svg viewBox="0 0 640 250" fill="none">
+      <defs><ArrowDef id="du-d" color={DIM} /></defs>
+      <rect x="40" y="95" width="110" height="56" rx="10" stroke={BRD} strokeWidth="2" fill="var(--bg-soft)" />
+      <text x="95" y="128" textAnchor="middle" fill={TXT} fontSize="13" fontWeight="800">상태 s</text>
+      <line x1="150" y1="123" x2="200" y2="123" stroke={DIM} strokeWidth="2" markerEnd="url(#du-d)" />
+      <rect x="204" y="95" width="120" height="56" rx="10" stroke={ACC} strokeWidth="2.2" fill="var(--accent-soft)" />
+      <text x="264" y="128" textAnchor="middle" fill={TXT} fontSize="13" fontWeight="800">공유 몸통</text>
+      <path d="M 324 108 C 360 80, 380 70, 406 62" stroke={DIM} strokeWidth="2" markerEnd="url(#du-d)" />
+      <path d="M 324 138 C 360 166, 380 176, 406 184" stroke={DIM} strokeWidth="2" markerEnd="url(#du-d)" />
+      <rect x="410" y="36" width="130" height="50" rx="9" stroke={BLU} strokeWidth="2" fill="var(--bg-soft)" />
+      <text x="475" y="58" textAnchor="middle" fill={BLU} fontSize="13" fontWeight="800">V(s)</text>
+      <text x="475" y="76" textAnchor="middle" fill={DIM} fontSize="10.5">상태 가치 (스칼라)</text>
+      <rect x="410" y="160" width="130" height="50" rx="9" stroke={YLW} strokeWidth="2" fill="var(--bg-soft)" />
+      <text x="475" y="182" textAnchor="middle" fill={YLW} fontSize="13" fontWeight="800">A(s,a)</text>
+      <text x="475" y="200" textAnchor="middle" fill={DIM} fontSize="10.5">행동별 이점 (평균 0)</text>
+      <path d="M 540 66 C 580 85, 585 100, 590 112" stroke={DIM} strokeWidth="2" markerEnd="url(#du-d)" />
+      <path d="M 540 180 C 580 160, 585 148, 590 136" stroke={DIM} strokeWidth="2" markerEnd="url(#du-d)" />
+      <circle cx="600" cy="124" r="14" stroke={GRN} strokeWidth="2.2" fill="var(--bg-card)" />
+      <text x="600" y="129" textAnchor="middle" fill={GRN} fontSize="14" fontWeight="900">+</text>
+      <text x="600" y="158" textAnchor="middle" fill={GRN} fontSize="12" fontWeight="800">Q(s,a)</text>
+      <text x="320" y="240" textAnchor="middle" fill={DIM} fontSize="12">Q = V + A — "이 상태가 좋은가"와 "어느 행동이 나은가"를 분리해 학습 효율을 올린다</text>
+    </svg>
+  )
+}
+
+// ── 17. 정책 경사 직관 (좋으면 올리고 나쁘면 내린다) ────────
+function PgUpdate() {
+  const bars = [
+    { p: 0.25, g: '+12', dir: 'up' },
+    { p: 0.25, g: '-3', dir: 'down' },
+    { p: 0.25, g: '+5', dir: 'up' },
+    { p: 0.25, g: '-8', dir: 'down' },
+  ]
+  return (
+    <svg viewBox="0 0 640 240" fill="none">
+      <defs><ArrowDef id="pg-u" color={GRN} /><ArrowDef id="pg-dn" color="var(--red)" /></defs>
+      <line x1="90" y1="180" x2="560" y2="180" stroke={BRD} strokeWidth="1.5" />
+      {bars.map((b, i) => {
+        const x = 120 + i * 110
+        const h = b.p * 320
+        const up = b.dir === 'up'
+        return (
+          <g key={i}>
+            <rect x={x} y={180 - h} width="56" height={h} rx="6"
+              fill={up ? 'rgba(63,185,80,0.15)' : 'rgba(248,81,73,0.12)'}
+              stroke={up ? GRN : 'var(--red)'} strokeWidth="1.8" />
+            <text x={x + 28} y="200" textAnchor="middle" fill={TXT} fontSize="12.5" fontWeight="700">a{i + 1}</text>
+            <text x={x + 28} y="218" textAnchor="middle" fill={up ? GRN : 'var(--red)'} fontSize="11.5" fontWeight="800">G = {b.g}</text>
+            <line x1={x + 28} y1={180 - h - 8} x2={x + 28} y2={180 - h - (up ? 34 : -18)}
+              stroke={up ? GRN : 'var(--red)'} strokeWidth="2.4"
+              markerEnd={up ? 'url(#pg-u)' : 'url(#pg-dn)'} />
+          </g>
+        )
+      })}
+      <text x="320" y="40" textAnchor="middle" fill={TXT} fontSize="13" fontWeight="800">∇J = E[ ∇log π(a|s) · G ]</text>
+      <text x="320" y="62" textAnchor="middle" fill={DIM} fontSize="11.5">리턴이 좋았던 행동의 확률은 ↑, 나빴던 행동은 ↓ — 베이스라인을 빼면 "평균 대비"로 공정하게</text>
+    </svg>
+  )
+}
+
+// ── 18. n-step 롤아웃과 부트스트랩 ──────────────────────────
+function NstepRollout() {
+  return (
+    <svg viewBox="0 0 640 220" fill="none">
+      <defs><ArrowDef id="ns-d" color={DIM} /></defs>
+      {Array.from({ length: 6 }, (_, i) => {
+        const x = 60 + i * 92
+        return (
+          <g key={i}>
+            <circle cx={x} cy="90" r="17" stroke={i === 5 ? BLU : TXT} strokeWidth="2.2" fill="var(--bg-card)" />
+            <text x={x} y="95" textAnchor="middle" fill={i === 5 ? BLU : TXT} fontSize="11.5" fontWeight="800">
+              s{i === 5 ? '+5' : i === 0 ? 't' : '+' + i}
+            </text>
+            {i < 5 && (
+              <g>
+                <line x1={x + 17} y1="90" x2={x + 73} y2="90" stroke={DIM} strokeWidth="2" markerEnd="url(#ns-d)" />
+                <text x={x + 46} y="78" textAnchor="middle" fill={ACC} fontSize="11.5" fontWeight="700">r{i + 1}</text>
+              </g>
+            )}
+          </g>
+        )
+      })}
+      <path d="M 60 122 L 475 122" stroke={ACC} strokeWidth="2" />
+      <text x="265" y="142" textAnchor="middle" fill={ACC} fontSize="11.5" fontWeight="700">실제 보상 5개 누적 (γ 가중)</text>
+      <rect x="500" y="115" width="120" height="40" rx="8" stroke={BLU} strokeWidth="2" fill="var(--bg-soft)" />
+      <text x="560" y="133" textAnchor="middle" fill={BLU} fontSize="11.5" fontWeight="800">+ γ⁵ V(s+5)</text>
+      <text x="560" y="149" textAnchor="middle" fill={DIM} fontSize="10">부트스트랩 (no_grad)</text>
+      <text x="320" y="185" textAnchor="middle" fill={DIM} fontSize="12">중간에 에피소드가 끝나면(done) 그 지점에서 미래 항을 0으로 — (1−d) 마스크의 역할</text>
+      <text x="320" y="207" textAnchor="middle" fill={DIM} fontSize="12">n을 키우면 MC 쪽(저편향·고분산), 줄이면 TD 쪽 — 1일차 스펙트럼의 재등장</text>
+    </svg>
+  )
+}
+
+// ── 19. tanh 스쿼싱 (가우시안 → 유계 행동) ──────────────────
+function TanhSquash() {
+  const bell = (cx, sd, X0, W, Y0, H) =>
+    Array.from({ length: 81 }, (_, i) => {
+      const u = -3 + (i / 80) * 6
+      const y = Math.exp(-((u - cx) ** 2) / (2 * sd * sd))
+      const px = X0 + ((u + 3) / 6) * W
+      const py = Y0 - y * H
+      return (i === 0 ? 'M' : 'L') + px.toFixed(1) + ',' + py.toFixed(1)
+    }).join(' ')
+  // tanh 변환 후 밀도 (수치 근사): a = tanh(u), p(a) = N(u) / (1-a²)
+  const squashed = Array.from({ length: 81 }, (_, i) => {
+    const a = -0.985 + (i / 80) * 1.97
+    const u = Math.atanh(a)
+    const y = Math.exp(-((u - 0.7) ** 2) / 2) / (1 - a * a)
+    return { a, y }
+  })
+  const maxY = Math.max(...squashed.map((p) => p.y))
+  const sqPath = squashed.map((p, i) => {
+    const px = 400 + ((p.a + 1) / 2) * 190
+    const py = 175 - (p.y / maxY) * 120
+    return (i === 0 ? 'M' : 'L') + px.toFixed(1) + ',' + py.toFixed(1)
+  }).join(' ')
+  return (
+    <svg viewBox="0 0 640 230" fill="none">
+      <defs><ArrowDef id="th-a" color={ACC} /></defs>
+      <line x1="50" y1="175" x2="290" y2="175" stroke={BRD} strokeWidth="1.5" />
+      <path d={bell(0.7, 1, 50, 240, 175, 120)} stroke={BLU} strokeWidth="2.5" />
+      <text x="170" y="35" textAnchor="middle" fill={BLU} fontSize="12.5" fontWeight="700">u ~ N(μ(s), σ(s)) — 무한 지지</text>
+      <text x="288" y="192" textAnchor="end" fill={DIM} fontSize="10.5">u (범위 제한 없음)</text>
+      <path d="M 305 120 L 385 120" stroke={ACC} strokeWidth="2.4" markerEnd="url(#th-a)" />
+      <text x="345" y="108" textAnchor="middle" fill={ACC} fontSize="12" fontWeight="800">a = tanh(u)</text>
+      <line x1="400" y1="175" x2="590" y2="175" stroke={BRD} strokeWidth="1.5" />
+      <line x1="400" y1="175" x2="400" y2="50" stroke={BRD} strokeWidth="1" strokeDasharray="4 4" />
+      <line x1="590" y1="175" x2="590" y2="50" stroke={BRD} strokeWidth="1" strokeDasharray="4 4" />
+      <path d={sqPath} stroke={ACC} strokeWidth="2.5" />
+      <text x="400" y="192" textAnchor="middle" fill={DIM} fontSize="10.5">−1</text>
+      <text x="590" y="192" textAnchor="middle" fill={DIM} fontSize="10.5">+1</text>
+      <text x="495" y="35" textAnchor="middle" fill={ACC} fontSize="12.5" fontWeight="700">유계 행동 분포</text>
+      <text x="320" y="222" textAnchor="middle" fill={DIM} fontSize="12">변수 변환이므로 log π에 보정항 −Σlog(1−a²)이 필수 — 빼먹으면 α 조절이 무너진다</text>
+    </svg>
+  )
+}
+
+// ── 20. 트윈 Q의 min 포락선 ─────────────────────────────────
+function TwinQMin() {
+  const X0 = 70, Y0 = 185, W = 490, H = 120
+  const q1 = (t) => 0.55 + 0.16 * Math.sin(9 * t) + 0.05 * Math.sin(23 * t)
+  const q2 = (t) => 0.55 + 0.16 * Math.sin(9 * t + 2.2) + 0.05 * Math.sin(19 * t + 1)
+  const mk = (fn, lo) =>
+    Array.from({ length: 121 }, (_, i) => {
+      const t = i / 120
+      const v = lo ? Math.min(q1(t), q2(t)) : fn(t)
+      return (i === 0 ? 'M' : 'L') + (X0 + t * W).toFixed(1) + ',' + (Y0 - v * H * 1.6).toFixed(1)
+    }).join(' ')
+  return (
+    <svg viewBox="0 0 640 230" fill="none">
+      <line x1={X0} y1={Y0} x2={X0 + W} y2={Y0} stroke={BRD} strokeWidth="1.5" />
+      <line x1={X0} y1={Y0 - 0.55 * H * 1.6} x2={X0 + W} y2={Y0 - 0.55 * H * 1.6} stroke={GRN} strokeWidth="1.8" strokeDasharray="7 5" />
+      <path d={mk(q1)} stroke={BLU} strokeWidth="1.8" opacity="0.75" />
+      <path d={mk(q2)} stroke={YLW} strokeWidth="1.8" opacity="0.75" />
+      <path d={mk(null, true)} stroke={ACC} strokeWidth="3" />
+      <text x={X0 + 6} y="40" fill={BLU} fontSize="12" fontWeight="700">Q₁ (노이즈 추정)</text>
+      <text x={X0 + 150} y="40" fill={YLW} fontSize="12" fontWeight="700">Q₂ (다른 노이즈)</text>
+      <text x={X0 + 300} y="40" fill={ACC} fontSize="12" fontWeight="800">min(Q₁, Q₂)</text>
+      <text x={X0 + W} y={Y0 - 0.55 * H * 1.6 - 8} textAnchor="end" fill={GRN} fontSize="11.5" fontWeight="700">참 Q</text>
+      <text x="320" y="222" textAnchor="middle" fill={DIM} fontSize="12">서로 다른 오차를 가진 두 추정의 min은 아래쪽 포락선 — "비관주의"로 과대평가를 누른다</text>
+    </svg>
+  )
+}
+
+// ── 21. SAC 자동 온도 α의 궤적 ─────────────────────────────
+function AlphaTrajectory() {
+  const X0 = 70, Y0 = 185, W = 490, H = 130
+  const mk = (fn) =>
+    Array.from({ length: 101 }, (_, i) => {
+      const t = i / 100
+      return (i === 0 ? 'M' : 'L') + (X0 + t * W).toFixed(1) + ',' + (Y0 - fn(t) * H).toFixed(1)
+    }).join(' ')
+  const ret = (t) => 0.08 + 0.85 / (1 + Math.exp(-8 * (t - 0.4)))
+  const alpha = (t) => 0.9 * Math.exp(-2.6 * t) + 0.08
+  return (
+    <svg viewBox="0 0 640 230" fill="none">
+      <line x1={X0} y1={Y0} x2={X0 + W} y2={Y0} stroke={BRD} strokeWidth="1.5" />
+      <path d={mk(ret)} stroke={GRN} strokeWidth="2.5" />
+      <path d={mk(alpha)} stroke={ACC} strokeWidth="2.5" />
+      <text x={X0 + 290} y="52" fill={GRN} fontSize="12.5" fontWeight="700">리턴 (성능) ↑</text>
+      <text x={X0 + 120} y="95" fill={ACC} fontSize="12.5" fontWeight="700">온도 α ↓ — 탐험이 자동으로 잦아든다</text>
+      <text x={X0 + W} y={Y0 + 18} textAnchor="end" fill={DIM} fontSize="11">학습 진행 →</text>
+      <text x="320" y="222" textAnchor="middle" fill={DIM} fontSize="12">정책이 자신감을 얻을수록 α가 내려간다 — 탐험→활용 전환이 목적함수 안에서 저절로</text>
+    </svg>
+  )
+}
+
 export const FIGURES = {
   skate: { caption: '그래프 — 스케이트 배우기: 정석 지도 vs 시행착오, 두 학습곡선', C: SkateCurves },
   'agent-env': { caption: '그림 — 에이전트-환경 상호작용 루프', C: AgentEnvLoop },
@@ -438,6 +736,15 @@ export const FIGURES = {
   ddpg: { caption: '그림 — DDPG의 4개 네트워크와 기울기 흐름', C: DdpgFlow },
   'entropy-alpha': { caption: '그래프 — 온도 α에 따른 볼츠만 정책 π ∝ exp(Q/α)', C: EntropyAlphaBars },
   qlog: { caption: '그래프 — 샤논 −log vs Tsallis −log_q (q=2)', C: QlogCurves },
+  'qnet-io': { caption: '그림 — DQN 네트워크의 입출력 설계', C: QnetIO },
+  gather: { caption: '그림 — gather의 동작: 배치에서 선택 행동의 Q만 추출', C: GatherDiagram },
+  overest: { caption: '그래프 — Q 추정치의 과대평가와 Double DQN의 교정 (모식도)', C: Overestimation },
+  dueling: { caption: '그림 — Dueling DQN: Q = V(s) + A(s,a) 분해', C: DuelingDiagram },
+  'pg-update': { caption: '그림 — 정책 경사의 직관: 리턴에 따라 확률을 올리고 내린다', C: PgUpdate },
+  nstep: { caption: '그림 — n-step 롤아웃: 실제 보상 n개 + 부트스트랩', C: NstepRollout },
+  'tanh-squash': { caption: '그래프 — tanh 스쿼싱: 가우시안을 행동 범위로 누르기', C: TanhSquash },
+  twinq: { caption: '그래프 — 트윈 Q의 min: 노이즈 추정의 아래쪽 포락선 (모식도)', C: TwinQMin },
+  'alpha-traj': { caption: '그래프 — SAC 자동 온도 α와 성능의 전형적 궤적 (모식도)', C: AlphaTrajectory },
 }
 
 export default function Figure({ id }) {
