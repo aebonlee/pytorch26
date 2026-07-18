@@ -27,6 +27,7 @@ import LabsPage from './pages/LabsPage.jsx'
 import ProjectsPage from './pages/ProjectsPage.jsx'
 import SetupPage from './pages/SetupPage.jsx'
 import SummaryPage from './pages/SummaryPage.jsx'
+import VodPage from './pages/VodPage.jsx'
 
 export default function App() {
   return (
@@ -43,6 +44,7 @@ export default function App() {
         <Route path="/projects" element={<ProjectsPage />} />
         <Route path="/quiz" element={<QuizPage />} />
         <Route path="/extra" element={<ExtraPage />} />
+        <Route path="/vod" element={<VodPage />} />
         <Route path="*" element={<Home />} />
       </Route>
     </Routes>

@@ -46,6 +46,7 @@ export default function Layout() {
             <NavLink to="/projects">프로젝트</NavLink>
             <NavLink to="/quiz">복습퀴즈</NavLink>
             <NavLink to="/extra">심화학습</NavLink>
+            <NavLink to="/vod">VOD</NavLink>
             <button
               className="theme-toggle"
               onClick={toggleTheme}

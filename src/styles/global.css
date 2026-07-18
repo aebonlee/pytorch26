@@ -280,6 +280,24 @@ mark.hl {
 .meta-badges .mb b { color: var(--yellow); font-weight: 600; letter-spacing: 1px; }
 .meta-badges .mb.imp b { color: var(--accent); }
 
+/* ── VOD 카드 (/vod) ── */
+.vod-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
+.vod-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden;
+  transition: border-color 0.15s;
+}
+.vod-card:hover { border-color: var(--accent); }
+.vod-frame { position: relative; padding-top: 56.25%; background: #000; }
+.vod-frame iframe {
+  position: absolute; inset: 0; width: 100%; height: 100%; border: 0;
+}
+.vod-meta { padding: 14px 16px; }
+.vod-meta .kind { font-size: 0.72rem; color: var(--accent); font-weight: 700; margin-right: 10px; }
+.vod-meta h3 { font-size: 0.96rem; margin: 6px 0 6px; }
+.vod-meta h3 a:hover { color: var(--accent); }
+.vod-meta p { color: var(--text-dim); font-size: 0.85rem; }
+
 /* ── 요약정리 표·공식 (/summary) ── */
 .sum-table {
   width: 100%; border-collapse: collapse; font-size: 0.88rem;
