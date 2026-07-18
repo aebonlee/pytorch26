@@ -19,6 +19,12 @@
    - twitter:card(summary_large_image) 세트 추가
 3. 빌드 → dist/og-image.png 포함 확인 → 커밋·푸시 → Actions 배포
 
+## 추가 (같은 날): 재사용 가능한 생성 스크립트로 전환
+- `scripts/generate-og-image.mjs` — sharp 기반 1200×630 생성기, **CONFIG 객체만 수정하면 사이트별 맞춤** (badge/titleLines/subtitle/footer/accent)
+- 실행: `npm run og-image` (사전 1회 `npm i -D sharp` 또는 `npm i --no-save sharp`)
+- sharp는 package.json에 넣지 않음 — CI(Actions) 설치 용량을 늘리지 않기 위해. 스크립트가 부재 감지 시 설치 안내 출력
+- 다른 사이트 재사용법: scripts/ 폴더 복사 → CONFIG 수정 → npm run og-image
+
 ## 남은 일
 - 카카오 디버거에서 캐시 초기화 후 미리보기 확인은 대표 몫
 - 기존 사이트들(120여 개)에 소급 적용은 별도 지시 시 진행
