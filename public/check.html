@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>pytorch26 자동 진단</title>
+<meta name="robots" content="noindex" />
+<style>
+  body { font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+         max-width: 720px; margin: 40px auto; padding: 0 20px; color: #222; }
+  h1 { font-size: 1.3rem; }
+  #verdict { font-size: 2rem; font-weight: 800; padding: 24px; border-radius: 12px;
+             background: #f4f4f4; margin: 20px 0; line-height: 1.5; }
+  #verdict .code { font-size: 4rem; display: block; }
+  ul { line-height: 2; font-size: 1.05rem; }
+  .ok::before { content: '✅ '; } .bad::before { content: '❌ '; }
+  /* 이 페이지 자체의 애니메이션 작동 테스트용 상자 */
+  #spin { width: 40px; height: 40px; background: #EE4C2C; border-radius: 8px;
+          animation: spin 2s linear infinite; margin: 10px 0; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  iframe { width: 100%; height: 200px; border: 1px solid #ccc; border-radius: 8px; }
+</style>
+</head>
+<body>
+<h1>🔥 pytorch26 자동 진단 (약 5초 소요)</h1>
+<div id="spin"></div>
+<div id="verdict"><span class="code">…</span>진단 중입니다. 잠시만 기다려 주세요.</div>
+<ul id="detail"></ul>
+<p>아래는 메인페이지 미리보기(진단용)입니다.</p>
+<iframe id="main" src="/"></iframe>
+
+<script>
+// 진단 항목을 순서대로 수집해 최종 코드 A~E 하나로 요약한다.
+// 대표가 다른 컴퓨터에서 코드 한 글자만 전달하면 되도록 설계.
+const detail = document.getElementById('detail')
+const verdict = document.getElementById('verdict')
+const add = (ok, text) => {
+  const li = document.createElement('li')
+  li.className = ok ? 'ok' : 'bad'
+  li.textContent = text
+  detail.appendChild(li)
+}
+const snap = (el, win) => (win || window).getComputedStyle(el).transform
+
+async function run() {
+  const r = {}
+
+  // 1) 이 페이지 자체의 CSS 애니메이션이 도는가 (브라우저 레벨 테스트)
+  const spin = document.getElementById('spin')
+  const s1 = snap(spin)
+  await new Promise(res => setTimeout(res, 700))
+  r.ownAnim = snap(spin) !== s1
+  add(r.ownAnim, '브라우저 CSS 애니메이션 작동: ' + (r.ownAnim ? '정상' : '멈춤'))
+
+  // 2) 모션 최소화 설정
+  r.reduced = matchMedia('(prefers-reduced-motion: reduce)').matches
+  add(!r.reduced, '모션 최소화(reduced-motion): ' + (r.reduced ? '켜짐' : '꺼짐(정상)'))
+
+  // 3) 최신 HTML의 번들 이름 vs 실제 로드된 번들 이름 (캐시 불일치 검사)
+  try {
+    const html = await (await fetch('/', { cache: 'no-store' })).text()
+    r.freshJs = (html.match(/assets\/index-[^"]+\.js/) || [null])[0]
+  } catch { r.freshJs = null }
+
+  // 4) 메인페이지 iframe 내부 상태 (같은 도메인이라 접근 가능)
+  const iframe = document.getElementById('main')
+  await new Promise(res => setTimeout(res, 3000))   // 렌더링 여유
+  let doc, win
+  try { doc = iframe.contentDocument; win = iframe.contentWindow } catch { doc = null }
+  if (doc) {
+    r.loadedJs = (doc.querySelector('script[type="module"]') || {}).src || ''
+    r.loadedJs = r.loadedJs.split('/').slice(-2).join('/') || '(없음)'
+    r.cacheMismatch = r.freshJs && r.loadedJs !== '(없음)' && !r.loadedJs.includes(r.freshJs.split('/')[1])
+    add(!r.cacheMismatch, '번들 캐시 일치: 서버=' + r.freshJs + ' / 로드됨=' + r.loadedJs)
+
+    const root = doc.getElementById('root')
+    r.mounted = !!(root && root.children.length > 0)
+    add(r.mounted, 'React 화면 렌더링: ' + (r.mounted ? '성공' : '실패(빈 화면)'))
+
+    const ticker = doc.querySelector('.ticker-track')
+    if (ticker) {
+      r.animName = win.getComputedStyle(ticker).animationName
+      const t1 = snap(ticker, win)
+      await new Promise(res => setTimeout(res, 700))
+      r.tickerMoving = snap(ticker, win) !== t1
+      add(r.animName !== 'none', '띠줄 애니메이션 CSS 적용: ' + r.animName)
+      add(r.tickerMoving, '띠줄 실제 움직임: ' + (r.tickerMoving ? '움직임' : '정지'))
+    } else {
+      r.animName = '(띠줄 없음)'
+      add(false, '띠줄(.ticker-track) 요소를 찾지 못함')
+    }
+  }
+
+  // 최종 판정 — 위에서부터 우선순위
+  let code, msg
+  if (!r.ownAnim) { code = 'A'; msg = '이 컴퓨터의 크롬이 애니메이션 자체를 못 돌리고 있음 (그래픽/가속 문제)' }
+  else if (r.cacheMismatch) { code = 'B'; msg = '옛날 캐시가 남아 있음 — Ctrl+Shift+R 강력 새로고침 필요' }
+  else if (!r.mounted) { code = 'C'; msg = '메인 JS가 실행되지 않음 (스크립트 차단/로드 실패)' }
+  else if (r.animName === 'none') { code = 'D'; msg = 'CSS가 애니메이션을 끄고 있음' }
+  else if (!r.tickerMoving) { code = 'E'; msg = '코드는 정상인데 화면 갱신만 멈춤 (하드웨어 가속 문제)' }
+  else { code = 'F'; msg = '모두 정상 — 메인페이지도 정상 작동해야 합니다' }
+  verdict.innerHTML = '<span class="code">' + code + '</span>' + msg
+}
+run()
+</script>
+</body>
+</html>
