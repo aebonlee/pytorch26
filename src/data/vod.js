@@ -10,7 +10,13 @@
 // ============================================================
 
 export const courseVods = [
-  // 예시: { day: 'DAY 1', title: '1교시 — 강화학습 소개', youtubeId: 'XXXXXXXXXXX', desc: '...' },
+  // 대표 유튜브 채널: 이애본교수의 역량기반 진로설계
+  {
+    day: '사전학습',
+    title: '0 기본 — 파이토치 개요 및 설치',
+    youtubeId: 'aNm36dZ8Mpc',
+    desc: '이애본 강사의 파이토치 입문 영상 — 수업 전 예습·환경설정 복습용으로 시청하세요',
+  },
 ]
 
 export const lectures = [
