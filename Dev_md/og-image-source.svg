@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <!-- 배경: 다크 네이비 + 오렌지 글로우 -->
+  <defs>
+    <radialGradient id="glow" cx="82%" cy="30%" r="60%">
+      <stop offset="0%" stop-color="#EE4C2C" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#EE4C2C" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0d1117"/>
+      <stop offset="100%" stop-color="#161d29"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+
+  <!-- 파이토치 로고 모티프 (원호 + 점) 우측 -->
+  <g transform="translate(985, 200)">
+    <circle cx="0" cy="35" r="95" fill="none" stroke="#EE4C2C" stroke-width="34" opacity="0.95"/>
+    <circle cx="52" cy="-62" r="24" fill="#EE4C2C"/>
+    <circle cx="0" cy="35" r="150" fill="none" stroke="#EE4C2C" stroke-width="2" opacity="0.25"/>
+  </g>
+
+  <!-- 상단 라벨 -->
+  <text x="80" y="150" font-family="Apple SD Gothic Neo, AppleGothic, sans-serif" font-size="30" font-weight="700" fill="#EE4C2C" letter-spacing="6">MULTICAMPUS · 3-DAY COURSE</text>
+
+  <!-- 메인 타이틀 -->
+  <text x="76" y="255" font-family="Apple SD Gothic Neo, AppleGothic, sans-serif" font-size="86" font-weight="900" fill="#ffffff">PyTorch로 배우는</text>
+  <text x="76" y="360" font-family="Apple SD Gothic Neo, AppleGothic, sans-serif" font-size="86" font-weight="900" fill="#ffffff">강화학습</text>
+
+  <!-- 서브 -->
+  <text x="80" y="435" font-family="Apple SD Gothic Neo, AppleGothic, sans-serif" font-size="32" font-weight="600" fill="#9fb0c3">MDP · DQN · A2C · DDPG · SAC — 3일 21시간 집중 구현</text>
+
+  <!-- 하단 정보 바 -->
+  <rect x="80" y="500" width="640" height="4" rx="2" fill="#EE4C2C"/>
+  <text x="80" y="560" font-family="Apple SD Gothic Neo, AppleGothic, sans-serif" font-size="28" font-weight="700" fill="#e6edf3">pytorch26.dreamitbiz.com</text>
+  <text x="530" y="560" font-family="Apple SD Gothic Neo, AppleGothic, sans-serif" font-size="28" font-weight="500" fill="#9fb0c3">2026.07.27 ~ 07.29 · 역삼캠퍼스</text>
+</svg>
