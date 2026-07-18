@@ -48,7 +48,13 @@ export default function ProjectsPage() {
       <div className="objectives">
         <h4>📢 결과 인증 방법</h4>
         <ul>
-          <li>각 프로젝트의 <b>결과 인증 기준</b>을 달성하면, 학습곡선 그래프나 실행 영상을 수업 중 안내하는 공유 보드(패들렛)에 올려 주세요</li>
+          <li>
+            각 프로젝트의 <b>결과 인증 기준</b>을 달성하면, 학습곡선 그래프나 실행 영상을{' '}
+            <a href="https://padlet.com/aebon/pytorch-3-njtckwapss7z63jl" target="_blank" rel="noreferrer" style={{ color: 'var(--accent)', fontWeight: 700 }}>
+              수업 패들렛 ↗
+            </a>
+            의 "실습 결과 인증 / 미니프로젝트 인증" 섹션에 올려 주세요
+          </li>
           <li>수치보다 중요한 것은 <b>시행착오 기록</b>입니다 — 무엇을 바꿨더니 무엇이 달라졌는지 한 줄씩 남기세요</li>
         </ul>
       </div>

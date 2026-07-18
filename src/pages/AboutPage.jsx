@@ -162,6 +162,10 @@ export default function AboutPage() {
                 <th>과정 페이지</th>
                 <td><a href={course.homepage} target="_blank" rel="noreferrer" style={{ color: 'var(--blue)' }}>멀티캠퍼스 과정 소개 바로가기 ↗</a></td>
               </tr>
+              <tr>
+                <th>수업 패들렛</th>
+                <td><a href="https://padlet.com/aebon/pytorch-3-njtckwapss7z63jl" target="_blank" rel="noreferrer" style={{ color: 'var(--blue)' }}>자료 공유·실습 인증 보드 ↗</a></td>
+              </tr>
             </tbody>
           </table>
         </div>
