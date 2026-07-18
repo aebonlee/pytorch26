@@ -164,7 +164,7 @@ export default function AboutPage() {
               </tr>
               <tr>
                 <th>수업 패들렛</th>
-                <td><a href="https://padlet.com/aebon/pytorch-3-njtckwapss7z63jl" target="_blank" rel="noreferrer" style={{ color: 'var(--blue)' }}>자료 공유·실습 인증 보드 ↗</a></td>
+                <td><a href="https://padlet.com/aebon/pytorch26" target="_blank" rel="noreferrer" style={{ color: 'var(--blue)' }}>자료 공유·실습 인증 보드 ↗</a></td>
               </tr>
             </tbody>
           </table>

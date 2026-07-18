@@ -50,7 +50,7 @@ export default function ProjectsPage() {
         <ul>
           <li>
             각 프로젝트의 <b>결과 인증 기준</b>을 달성하면, 학습곡선 그래프나 실행 영상을{' '}
-            <a href="https://padlet.com/aebon/pytorch-3-njtckwapss7z63jl" target="_blank" rel="noreferrer" style={{ color: 'var(--accent)', fontWeight: 700 }}>
+            <a href="https://padlet.com/aebon/pytorch26" target="_blank" rel="noreferrer" style={{ color: 'var(--accent)', fontWeight: 700 }}>
               수업 패들렛 ↗
             </a>
             의 "실습 결과 인증 / 미니프로젝트 인증" 섹션에 올려 주세요
