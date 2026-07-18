@@ -280,6 +280,18 @@ mark.hl {
 .meta-badges .mb b { color: var(--yellow); font-weight: 600; letter-spacing: 1px; }
 .meta-badges .mb.imp b { color: var(--accent); }
 
+/* ── 강의 도해 (components/figures.jsx) ── */
+.fig-box {
+  margin: 20px 0 8px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 20px 16px 14px;
+}
+.fig-box svg { width: 100%; height: auto; display: block; max-width: 680px; margin: 0 auto; }
+.fig-cap {
+  margin-top: 10px; text-align: center;
+  font-size: 0.8rem; color: var(--text-dim);
+}
+
 .code-block { margin: 26px 0; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
 .code-block .code-head {
   display: flex; justify-content: space-between; align-items: center;

@@ -45,6 +45,7 @@ export default {
         },
         {
           h: 'DDPG = DPG + DQN 기법',
+          fig: 'ddpg',
           p: `DDPG(Deep DPG, 2015)는 DPG에 DQN의 안정화 기법을 결합해 심층 연속 제어를 처음으로 실용화한 알고리즘입니다.
 ① 경험 재현 버퍼 — DPG는 off-policy라 버퍼 사용이 정당합니다 (2일차의 복선 회수).
 ② 타깃 네트워크 — 단, 하드 카피 대신 **소프트 업데이트** θ⁻ ← τθ + (1−τ)θ⁻ (τ≈0.005).
@@ -241,6 +242,7 @@ for episode in range(200):
         },
         {
           h: 'Soft 가치함수와 볼츠만 최적 정책',
+          fig: 'entropy-alpha',
           p: `엔트로피가 더해지면 벨만 방정식도 "soft" 버전이 됩니다.
 soft V(s) = E_a[ Q(s,a) − α log π(a|s) ]
 soft Q(s,a) = r + γ E[ V(s') ]
@@ -388,6 +390,7 @@ Q값이 명백히 낮은 나쁜 행동도 계속 시도한다는 뜻입니다.
         },
         {
           h: 'Tsallis 엔트로피 — 엔트로피의 일반화',
+          fig: 'qlog',
           p: `Tsallis 엔트로피는 통계물리학자 Tsallis가 제안한 일반화 엔트로피로, q-로그(log_q)로 정의됩니다.
 S_q(π) = E[ −log_q π(a|s) ],  log_q(x) = (x^{q−1} − 1)/(q − 1)
 ==q → 1이면 샤논 엔트로피로 수렴(즉 SAC는 TAC의 특수 사례)==, q = 2이면 sparse 엔트로피가 됩니다.

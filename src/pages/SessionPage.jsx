@@ -10,6 +10,7 @@ import { getDay, getSession, days, sessionKey } from '../data/curriculum.js'
 import useProgress from '../hooks/useProgress.js'
 import CodeBlock from '../components/CodeBlock.jsx'
 import DaySideNav from '../components/DaySideNav.jsx'
+import Figure from '../components/figures.jsx'
 import md, { stars } from '../utils/md.jsx'
 
 // 이전/다음 교시 탐색 (dir: -1 이전, +1 다음)
@@ -71,6 +72,7 @@ export default function SessionPage() {
         <div key={i} className="theory-block">
           <h3>{md(block.h)}</h3>
           <p>{md(block.p)}</p>
+          {block.fig && <Figure id={block.fig} />}
         </div>
       ))}
 
