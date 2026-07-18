@@ -41,6 +41,7 @@ export default function Layout() {
             <NavLink to="/day/1">1일차</NavLink>
             <NavLink to="/day/2">2일차</NavLink>
             <NavLink to="/day/3">3일차</NavLink>
+            <NavLink to="/summary">요약정리</NavLink>
             <NavLink to="/labs">실습소스</NavLink>
             <NavLink to="/projects">프로젝트</NavLink>
             <NavLink to="/quiz">복습퀴즈</NavLink>

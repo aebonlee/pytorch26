@@ -7,6 +7,7 @@
 //   /setup           → SetupPage   환경설정 5단계(설치·Colab·VS Code)
 //   /day/:dayId      → DayPage     해당 일차의 7교시 목록
 //   /day/:dayId/:slot→ SessionPage 교시 상세(이론+코드+완료버튼)
+//   /summary         → SummaryPage 요약정리(계보·비교표·공식·용어사전)
 //   /labs            → LabsPage    실습소스 모음(21교시 코드 집약)
 //   /projects        → ProjectsPage 미니 프로젝트 8종(결과 인증)
 //   /quiz            → QuizPage    복습퀴즈 15문항(제출 후 해설)
@@ -25,6 +26,7 @@ import PrereqPage from './pages/PrereqPage.jsx'
 import LabsPage from './pages/LabsPage.jsx'
 import ProjectsPage from './pages/ProjectsPage.jsx'
 import SetupPage from './pages/SetupPage.jsx'
+import SummaryPage from './pages/SummaryPage.jsx'
 
 export default function App() {
   return (
@@ -36,6 +38,7 @@ export default function App() {
         <Route path="/setup" element={<SetupPage />} />
         <Route path="/day/:dayId" element={<DayPage />} />
         <Route path="/day/:dayId/:slot" element={<SessionPage />} />
+        <Route path="/summary" element={<SummaryPage />} />
         <Route path="/labs" element={<LabsPage />} />
         <Route path="/projects" element={<ProjectsPage />} />
         <Route path="/quiz" element={<QuizPage />} />

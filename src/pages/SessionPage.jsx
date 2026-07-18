@@ -86,6 +86,7 @@ export default function SessionPage() {
         <div className="objectives" style={{ marginTop: 24 }}>
           <h4>🏁 3일 과정을 모두 마쳤습니다!</h4>
           <ul>
+            <li><Link to="/summary" style={{ color: 'var(--accent)', fontWeight: 700 }}>요약정리</Link>에서 3일 전체 뼈대·공식·용어를 한 번에 훑어보세요</li>
             <li><Link to="/quiz" style={{ color: 'var(--accent)', fontWeight: 700 }}>복습 퀴즈 15문항</Link>으로 전체 내용을 점검해 보세요</li>
             <li><Link to="/projects" style={{ color: 'var(--accent)', fontWeight: 700 }}>미니 프로젝트 8종</Link>으로 배운 알고리즘을 직접 완성해 보세요</li>
             <li><Link to="/extra" style={{ color: 'var(--accent)', fontWeight: 700 }}>심화학습 자료</Link>로 학습을 이어가세요</li>

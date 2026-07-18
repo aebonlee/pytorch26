@@ -280,6 +280,44 @@ mark.hl {
 .meta-badges .mb b { color: var(--yellow); font-weight: 600; letter-spacing: 1px; }
 .meta-badges .mb.imp b { color: var(--accent); }
 
+/* ── 요약정리 표·공식 (/summary) ── */
+.sum-table {
+  width: 100%; border-collapse: collapse; font-size: 0.88rem;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius); overflow: hidden;
+}
+.sum-table th, .sum-table td {
+  padding: 9px 13px; border-bottom: 1px solid var(--border);
+  text-align: left; vertical-align: top;
+}
+.sum-table thead th {
+  background: var(--bg-soft); color: var(--text-dim);
+  font-size: 0.78rem; font-weight: 800; white-space: nowrap;
+}
+.sum-table tr:last-child td { border-bottom: none; }
+.sum-table td { color: var(--text-dim); }
+
+.formula-row {
+  display: flex; gap: 14px; align-items: flex-start;
+  padding: 12px 0; border-bottom: 1px dashed var(--border);
+}
+.formula-row .fname {
+  flex: 0 0 170px; font-weight: 800; font-size: 0.88rem;
+  color: var(--accent); padding-top: 3px;
+}
+.formula-row .fbody { flex: 1; min-width: 0; }
+.formula-row .fcode {
+  display: block; background: var(--bg-soft); border-radius: 8px;
+  padding: 8px 12px; font-size: 0.84rem; overflow-x: auto;
+  font-family: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+  color: var(--text); white-space: nowrap;
+}
+.formula-row .fmean { font-size: 0.84rem; color: var(--text-dim); margin-top: 5px; }
+@media (max-width: 640px) {
+  .formula-row { flex-direction: column; gap: 6px; }
+  .formula-row .fname { flex-basis: auto; }
+}
+
 /* ── 강의 도해 (components/figures.jsx) ── */
 .fig-box {
   margin: 20px 0 8px;
