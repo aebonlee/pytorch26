@@ -95,12 +95,36 @@ button { font-family: inherit; cursor: pointer; }
 }
 .nav a:hover { color: var(--text); background: var(--bg-card); }
 .nav a.active { color: var(--accent); background: var(--accent-soft); }
+.header-actions { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
 .theme-toggle {
-  margin-left: 6px; padding: 6px 11px; border-radius: 8px;
+  padding: 6px 11px; border-radius: 8px;
   border: 1px solid var(--border); background: var(--bg-card);
   color: var(--text-dim); font-size: 0.85rem; line-height: 1;
 }
 .theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+/* 햄버거 버튼 — 기본은 숨김, 모바일 미디어쿼리에서만 노출 */
+.nav-toggle {
+  display: none;
+  padding: 8px 10px; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--bg-card);
+  color: var(--text);
+}
+.nav-toggle:hover { border-color: var(--accent); }
+/* 막대 3개를 i 태그로 그린다 (아이콘 폰트·SVG 의존 없이) */
+.bars { display: block; width: 18px; height: 14px; position: relative; }
+.bars i {
+  position: absolute; left: 0; width: 100%; height: 2px;
+  background: currentColor; border-radius: 2px;
+  transition: transform 0.2s, opacity 0.2s;
+}
+.bars i:nth-child(1) { top: 0; }
+.bars i:nth-child(2) { top: 6px; }
+.bars i:nth-child(3) { top: 12px; }
+/* 열린 상태에서는 X자로 — 가운데 막대를 숨기고 위아래를 교차 회전 */
+.bars.is-x i:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.bars.is-x i:nth-child(2) { opacity: 0; }
+.bars.is-x i:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 
 /* ── Hero ───────────────────────────── */
 /* 2단 구성: 왼쪽 텍스트 + 오른쪽 파이토치 불꽃 모티프 SVG(애니메이션)
@@ -151,6 +175,7 @@ button { font-family: inherit; cursor: pointer; }
 /* 모션 최소화 설정 존중 */
 @media (prefers-reduced-motion: reduce) {
   .hero-art .orbit, .hero-art .glow, .ticker-track { animation: none; }
+  .bars i { transition: none; }
 }
 .hero .badge {
   display: inline-block; padding: 6px 14px; border-radius: 999px;
@@ -641,8 +666,50 @@ mark.hl {
   .side-days a { padding: 6px 10px; }
 }
 
+/* ── 헤더 메뉴 반응형 ────────────────────
+   메뉴가 12개라 한 줄에 다 들어가지 않는다. 두 단계로 접는다.
+   1) ~1100px : 2줄로 줄바꿈 + 헤더 높이를 가변으로
+   2) ~760px  : 햄버거 + 2열 그리드 드롭다운
+   ------------------------------------------------------------ */
+@media (max-width: 1100px) {
+  /* height 고정을 풀지 않으면 2번째 줄이 헤더 밖으로 삐져나온다 */
+  .site-header .inner {
+    height: auto; min-height: 60px; gap: 10px;
+    padding: 9px 0; flex-wrap: nowrap;
+  }
+  .nav {
+    flex-wrap: wrap; justify-content: flex-end;
+    row-gap: 3px; column-gap: 2px;
+  }
+  .nav a { padding: 6px 10px; font-size: 0.85rem; }
+}
+
+@media (max-width: 760px) {
+  .nav-toggle { display: inline-flex; }
+  /* 드롭다운: 헤더(sticky=위치기준) 바로 아래에 붙인다 */
+  .nav {
+    display: none;
+    position: absolute; top: 100%; left: 0; right: 0;
+    grid-template-columns: 1fr 1fr; gap: 6px;
+    padding: 12px 20px 16px;
+    /* 반투명 헤더 배경을 쓰면 뒤 본문이 비쳐 글자가 읽히지 않아 불투명 배경 */
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.14);
+    max-height: calc(100vh - 60px); overflow-y: auto;
+  }
+  .nav.open { display: grid; }
+  .nav a {
+    padding: 11px 12px; font-size: 0.92rem;   /* 손가락 터치 타깃 확보 */
+    border: 1px solid var(--border); background: var(--bg-card);
+    text-align: center;
+  }
+  .nav a.active { border-color: var(--accent); }
+  /* 메뉴 밖 탭으로 닫기 — 헤더(z-index 50) 아래에 깔린다 */
+  .nav-scrim { position: fixed; inset: 0; z-index: 40; }
+}
+
 @media (max-width: 640px) {
-  .nav a { padding: 6px 9px; font-size: 0.82rem; }
   .logo .sub { display: none; }
   .session-row { flex-wrap: wrap; }
   .session-row .time { width: auto; }
