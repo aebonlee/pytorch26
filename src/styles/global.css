@@ -667,38 +667,22 @@ mark.hl {
 }
 
 /* ── 헤더 메뉴 반응형 ────────────────────
-   메뉴가 12개라 한 줄에 다 들어가지 않는다. 두 단계로 접는다.
-   1) ~1100px : 2줄로 줄바꿈 + 헤더 높이를 가변으로
-   2) ~760px  : 햄버거 + 2열 그리드 드롭다운
+   메뉴가 12개라 1100px 아래에서는 한 줄에 들어가지 않는다.
+   대응은 햄버거 하나로 통일한다 (2026-07-20 대표 확정).
+   줄바꿈(2줄) 방식은 로고 옆에 여러 줄짜리 메뉴 덩어리가 붙어 어색했고,
+   헤더를 위·아래로 나누는 방식도 헤더가 두꺼워져 반려됐다.
+   → 폭이 좁으면 예외 없이 접는다. 헤더는 항상 60px 한 줄로 유지된다.
    ------------------------------------------------------------ */
 @media (max-width: 1100px) {
-  /* 헤더를 위·아래 2줄로 나눈다.
-     윗줄: 로고 + 액션(테마토글) / 아랫줄: 메뉴 전체 폭
-     로고 옆에 여러 줄짜리 메뉴 덩어리가 붙으면 로고 영역까지 2줄로 보여
-     헤더 무게중심이 흐트러진다 (2026-07-20 대표 지적) */
-  .site-header .inner {
-    /* height 고정을 풀지 않으면 2번째 줄이 헤더 밖으로 삐져나온다 */
-    height: auto; min-height: 60px; gap: 4px 10px;
-    padding: 9px 0; flex-wrap: wrap;
-  }
-  /* DOM 순서는 로고→메뉴→액션이라 order로 메뉴를 맨 뒤로 보내야
-     윗줄에 로고와 액션이 함께 남는다. flex-basis:100%가 줄바꿈을 강제한다 */
-  .nav {
-    order: 3; flex-basis: 100%; width: 100%;
-    flex-wrap: wrap; justify-content: flex-start;
-    row-gap: 3px; column-gap: 2px;
-    padding-top: 3px;
-  }
-  .nav a { padding: 6px 10px; font-size: 0.85rem; }
-}
-
-@media (max-width: 760px) {
   .nav-toggle { display: inline-flex; }
   /* 드롭다운: 헤더(sticky=위치기준) 바로 아래에 붙인다 */
   .nav {
     display: none;
     position: absolute; top: 100%; left: 0; right: 0;
-    grid-template-columns: 1fr 1fr; gap: 6px;
+    /* 폭에 따라 열 수가 자동으로 늘어난다: 폰 2열 → 태블릿 5~6열.
+       1fr 1fr로 고정하면 태블릿에서 항목 하나가 화면 절반을 먹어 우스워진다 */
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 6px;
     padding: 12px 20px 16px;
     /* 반투명 헤더 배경을 쓰면 뒤 본문이 비쳐 글자가 읽히지 않아 불투명 배경 */
     background: var(--bg);
