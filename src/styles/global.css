@@ -672,14 +672,22 @@ mark.hl {
    2) ~760px  : 햄버거 + 2열 그리드 드롭다운
    ------------------------------------------------------------ */
 @media (max-width: 1100px) {
-  /* height 고정을 풀지 않으면 2번째 줄이 헤더 밖으로 삐져나온다 */
+  /* 헤더를 위·아래 2줄로 나눈다.
+     윗줄: 로고 + 액션(테마토글) / 아랫줄: 메뉴 전체 폭
+     로고 옆에 여러 줄짜리 메뉴 덩어리가 붙으면 로고 영역까지 2줄로 보여
+     헤더 무게중심이 흐트러진다 (2026-07-20 대표 지적) */
   .site-header .inner {
-    height: auto; min-height: 60px; gap: 10px;
-    padding: 9px 0; flex-wrap: nowrap;
+    /* height 고정을 풀지 않으면 2번째 줄이 헤더 밖으로 삐져나온다 */
+    height: auto; min-height: 60px; gap: 4px 10px;
+    padding: 9px 0; flex-wrap: wrap;
   }
+  /* DOM 순서는 로고→메뉴→액션이라 order로 메뉴를 맨 뒤로 보내야
+     윗줄에 로고와 액션이 함께 남는다. flex-basis:100%가 줄바꿈을 강제한다 */
   .nav {
-    flex-wrap: wrap; justify-content: flex-end;
+    order: 3; flex-basis: 100%; width: 100%;
+    flex-wrap: wrap; justify-content: flex-start;
     row-gap: 3px; column-gap: 2px;
+    padding-top: 3px;
   }
   .nav a { padding: 6px 10px; font-size: 0.85rem; }
 }
